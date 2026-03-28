@@ -1,6 +1,6 @@
 import Webcam from "react-webcam";
 import { FaceLandmarker, FilesetResolver } from "@mediapipe/tasks-vision";
-import '../../../index.css'
+
 
 // Fixed and optimized utility functions for better performance and readability
 

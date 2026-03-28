@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import { FaceLandmarker, FilesetResolver } from "@mediapipe/tasks-vision";
-import '../../../index.css';
+import "../../shared/style/global.scss";
 import { captureExpression } from "../utils/utils";
 
 const FaceExpression = () => {

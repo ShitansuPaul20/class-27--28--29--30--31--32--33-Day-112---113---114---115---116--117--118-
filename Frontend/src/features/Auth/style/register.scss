@@ -1,0 +1,479 @@
+// ── Variables ──────────────────────────────────────────
+$bg:          #080b14;
+$surface:     #0e1220;
+$card:        #111827;
+$border:      rgba(255, 255, 255, 0.07);
+$purple:      #8b5cf6;
+$pink:        #ec4899;
+$cyan:        #06b6d4;
+$green:       #10b981;
+$text:        #f1f5f9;
+$muted:       #64748b;
+$sub:         #94a3b8;
+$error:       #f87171;
+
+$grad:        linear-gradient(135deg, $purple, $pink);
+$grad-cyan:   linear-gradient(135deg, $cyan, $purple);
+$font:        'Outfit', sans-serif;
+$radius:      12px;
+
+// ── Mixins ─────────────────────────────────────────────
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin grad-text($g: $grad) {
+  background: $g;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// ── Keyframes ──────────────────────────────────────────
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blobDrift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(-30px, 40px) scale(1.04); }
+  66%       { transform: translate(20px, -20px) scale(0.97); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 32px rgba($cyan, 0.15), 0 0 64px rgba($purple, 0.1); }
+  50%       { box-shadow: 0 0 48px rgba($purple, 0.25), 0 0 80px rgba($pink, 0.12); }
+}
+
+@keyframes strengthFill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+// ── Root ───────────────────────────────────────────────
+.register {
+  position: relative;
+  min-height: 100vh;
+  @include flex-center;
+  font-family: $font;
+  color: $text;
+
+  // Blob 1 — top-right cyan
+  &::before {
+    content: '';
+    position: fixed;
+    width: 480px;
+    height: 480px;
+    border-radius: 50%;
+    background: $cyan;
+    filter: blur(110px);
+    opacity: 0.12;
+    top: -130px;
+    right: -100px;
+    pointer-events: none;
+    z-index: 0;
+    animation: blobDrift 14s ease-in-out infinite;
+  }
+
+  // Blob 2 — bottom-left purple
+  &::after {
+    content: '';
+    position: fixed;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: $purple;
+    filter: blur(100px);
+    opacity: 0.16;
+    bottom: -120px;
+    left: -80px;
+    pointer-events: none;
+    z-index: 0;
+    animation: blobDrift 18s ease-in-out infinite reverse;
+    animation-delay: -6s;
+  }
+
+  // ── Container ────────────────────────────────────────
+  &__container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 440px;
+    background: rgba($surface, 0.85);
+    border: 1px solid $border;
+    border-radius: 20px;
+    padding: 44px 40px;
+    backdrop-filter: blur(20px);
+    animation:
+      fadeSlideUp 0.7s ease both,
+      glowPulse   5s ease-in-out infinite;
+
+    @media (max-width: 480px) {
+      margin: 20px;
+      padding: 32px 24px;
+    }
+  }
+
+  // ── Title ─────────────────────────────────────────────
+  &__title {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+    @include grad-text($grad-cyan);
+    animation: fadeSlideUp 0.7s ease 0.1s both;
+
+    &::before {
+      content: '✨ ';
+      -webkit-text-fill-color: initial;
+    }
+  }
+
+  // ── Subtitle ──────────────────────────────────────────
+  &__subtitle {
+    font-size: 13px;
+    color: $sub;
+    margin-bottom: 32px;
+    line-height: 1.5;
+    animation: fadeSlideUp 0.7s ease 0.15s both;
+  }
+
+  // ── Form ──────────────────────────────────────────────
+  &__form {
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  // ── Form Group ────────────────────────────────────────
+  &__form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    animation: fadeSlideUp 0.7s ease both;
+
+    &:nth-child(1) { animation-delay: 0.2s; }
+    &:nth-child(2) { animation-delay: 0.28s; }
+    &:nth-child(3) { animation-delay: 0.36s; }
+  }
+
+  // ── Label ─────────────────────────────────────────────
+  &__form-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: $sub;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  // ── Input ─────────────────────────────────────────────
+  &__form-input {
+    width: 100%;
+    background: $card;
+    border: 1.5px solid $border;
+    border-radius: $radius;
+    padding: 13px 16px;
+    font-family: $font;
+    font-size: 14px;
+    color: $text;
+    outline: none;
+    transition:
+      border-color 0.25s ease,
+      box-shadow   0.25s ease,
+      background   0.25s ease;
+
+    &::placeholder {
+      color: $muted;
+    }
+
+    &:hover:not(:focus) {
+      border-color: rgba(255, 255, 255, 0.13);
+    }
+
+    &:focus {
+      border-color: $cyan;
+      background: rgba($cyan, 0.05);
+      box-shadow: 0 0 0 4px rgba($cyan, 0.1);
+    }
+
+    // Password field gets purple focus (differentiates from other fields)
+    &#password:focus {
+      border-color: $purple;
+      background: rgba($purple, 0.05);
+      box-shadow: 0 0 0 4px rgba($purple, 0.1);
+    }
+
+    // Error modifier
+    &--error {
+      border-color: $error !important;
+      background: rgba($error, 0.05) !important;
+
+      &:focus {
+        box-shadow: 0 0 0 4px rgba($error, 0.1) !important;
+      }
+    }
+  }
+
+  // ── Error Message ─────────────────────────────────────
+  &__form-error {
+    font-size: 11px;
+    color: $error;
+    letter-spacing: 0.04em;
+    margin-top: 2px;
+  }
+
+  // ── Password Strength Bar ─────────────────────────────
+  &__strength {
+    display: flex;
+    gap: 5px;
+    margin-top: 6px;
+    height: 3px;
+
+    &-seg {
+      flex: 1;
+      border-radius: 2px;
+      background: $border;
+      transform-origin: left;
+      transition: background 0.35s ease;
+    }
+
+    // Strength level modifiers (add via JS on input)
+    &--weak   .register__strength-seg:nth-child(-n+1) { background: $error; }
+    &--fair   .register__strength-seg:nth-child(-n+2) { background: #f97316; }
+    &--good   .register__strength-seg:nth-child(-n+3) { background: #eab308; }
+    &--strong .register__strength-seg:nth-child(-n+4) { background: $green; }
+  }
+
+  // ── Submit Button ─────────────────────────────────────
+  &__form-button {
+    width: 100%;
+    padding: 14px;
+    background: $grad-cyan;
+    border: none;
+    border-radius: $radius;
+    color: #fff;
+    font-family: $font;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition:
+      transform  0.2s ease,
+      box-shadow 0.3s ease,
+      opacity    0.2s ease;
+    box-shadow: 0 4px 20px rgba($cyan, 0.28);
+    animation: fadeSlideUp 0.7s ease 0.44s both;
+
+    &::before {
+      content: '✨  ';
+      font-size: 15px;
+    }
+
+    // Shine sweep on hover
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.15),
+        transparent
+      );
+      transform: skewX(-20deg);
+      transition: left 0.5s ease;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 36px rgba($cyan, 0.4);
+
+      &::after {
+        left: 125%;
+      }
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 16px rgba($cyan, 0.28);
+    }
+
+    &:disabled {
+      opacity: 0.55;
+      pointer-events: none;
+    }
+  }
+
+  // ── Divider ───────────────────────────────────────────
+  &__divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: fadeSlideUp 0.7s ease 0.48s both;
+
+    &::before,
+    &::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: $border;
+    }
+
+    span {
+      font-size: 11px;
+      color: $muted;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+    }
+  }
+
+  // ── Google Button ─────────────────────────────────────
+  &__google-btn {
+    width: 100%;
+    @include flex-center;
+    gap: 10px;
+    padding: 13px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid $border;
+    border-radius: $radius;
+    color: $text;
+    font-family: $font;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition:
+      border-color 0.25s ease,
+      background   0.25s ease,
+      transform    0.2s ease,
+      box-shadow   0.25s ease;
+    animation: fadeSlideUp 0.7s ease 0.52s both;
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+  }
+
+  // ── Terms Row ─────────────────────────────────────────
+  &__terms {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 12px;
+    color: $sub;
+    line-height: 1.5;
+    animation: fadeSlideUp 0.7s ease 0.4s both;
+
+    input[type='checkbox'] {
+      display: none;
+    }
+
+    &-box {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      border: 1.5px solid $border;
+      border-radius: 5px;
+      cursor: pointer;
+      @include flex-center;
+      transition: all 0.2s ease;
+      margin-top: 1px;
+
+      input:checked + & {
+        background: $grad;
+        border-color: transparent;
+
+        &::after {
+          content: '✓';
+          font-size: 11px;
+          color: #fff;
+          font-family: sans-serif;
+        }
+      }
+    }
+
+    a {
+      color: $purple;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 0.75;
+      }
+    }
+  }
+
+  // ── Switch CTA ────────────────────────────────────────
+  &__switch {
+    text-align: center;
+    font-size: 13px;
+    color: $sub;
+    animation: fadeSlideUp 0.7s ease 0.56s both;
+
+    a {
+      color: $pink;
+      font-weight: 500;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 0.75;
+      }
+    }
+  }
+
+  // ── Forgot Link ───────────────────────────────────────
+  &__forgot {
+    font-size: 12px;
+    color: $muted;
+    text-align: right;
+    text-decoration: none;
+    margin-top: -6px;
+    display: block;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $cyan;
+    }
+  }
+
+  &__login-link{
+    margin-top: 10px;
+    text-align: center;
+    font-size: 13px;
+    color: $sub;
+    animation: fadeSlideUp 0.7s ease 0.6s both;
+
+    &-anchor {
+      color: $cyan;
+      font-weight: 500;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 0.75;
+      }
+    }
+  }
+}

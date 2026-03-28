@@ -1,11 +1,11 @@
-import { FaceDetector } from '@mediapipe/tasks-vision'
 import React from 'react'
-import FaceExpression from './features/expression/components/FaceExpression'
+import AppRoutes from './AppRoutes'
+import "./features/shared/style/global.scss"
 
 const App = () => {
   return (
     <div>
-      <FaceExpression/>
+      <AppRoutes/>
     </div>
   )
 }

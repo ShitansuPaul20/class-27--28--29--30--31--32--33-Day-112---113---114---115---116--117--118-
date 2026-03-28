@@ -1,0 +1,269 @@
+// ── Variables ──────────────────────────────────────────
+$bg:       #080b14;
+$surface:  #0e1220;
+$border:   rgba(255, 255, 255, 0.07);
+$purple:   #8b5cf6;
+$pink:     #ec4899;
+$text:     #f1f5f9;
+$muted:    #64748b;
+$sub:      #94a3b8;
+$font:     'Outfit', sans-serif;
+$radius:   12px;
+
+$grad:     linear-gradient(135deg, $purple, $pink);
+
+// ── Mixins ─────────────────────────────────────────────
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin grad-text {
+  background: $grad;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// ── Keyframes ──────────────────────────────────────────
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blobDrift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(30px, -40px) scale(1.05); }
+  66%       { transform: translate(-20px, 20px) scale(0.97); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 32px rgba($purple, 0.15), 0 0 64px rgba($pink, 0.08); }
+  50%       { box-shadow: 0 0 48px rgba($purple, 0.28), 0 0 80px rgba($pink, 0.14); }
+}
+
+// ── Root ───────────────────────────────────────────────
+.login {
+  position: relative;
+  min-height: 100vh;
+  @include flex-center;
+
+  font-family: $font;
+  color: $text;
+
+
+  &::before {
+    content: '';
+    position: fixed;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: $purple;
+    filter: blur(110px);
+    opacity: 0.15;
+    top: -150px; left: -100px;
+    pointer-events: none;
+    z-index: 0;
+    animation: blobDrift 12s ease-in-out infinite;
+  }
+
+  &::after {
+    content: '';
+    position: fixed;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    background: $pink;
+    filter: blur(100px);
+    opacity: 0.14;
+    bottom: -120px; right: -80px;
+    pointer-events: none;
+    z-index: 0;
+    animation: blobDrift 15s ease-in-out infinite reverse;
+    animation-delay: -5s;
+  }
+
+  // ── Container ────────────────────────────────────────
+  &__container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 420px;
+    background: rgba($surface, 0.85);
+    border: 1px solid $border;
+    border-radius: 20px;
+    padding: 44px 40px;
+    backdrop-filter: blur(20px);
+    animation:
+      fadeSlideUp 0.7s ease both,
+      glowPulse   5s ease-in-out infinite;
+
+    @media (max-width: 480px) {
+      margin: 20px;
+      padding: 32px 24px;
+    }
+  }
+
+  // ── Title ─────────────────────────────────────────────
+  &__title {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+    @include grad-text;
+    animation: fadeSlideUp 0.7s ease 0.1s both;
+
+    &::before {
+      content: '🎧 ';
+      -webkit-text-fill-color: initial;
+    }
+  }
+
+  // ── Subtitle ──────────────────────────────────────────
+  &__subtitle {
+    font-size: 13px;
+    color: $sub;
+    margin-bottom: 28px;
+    line-height: 1.5;
+    animation: fadeSlideUp 0.7s ease 0.15s both;
+  }
+
+  // ── Form ──────────────────────────────────────────────
+  &__form {
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    // Stagger each FormGroup inside login form
+    .form-group {
+      &:nth-child(1) { animation-delay: 0.2s; }
+      &:nth-child(2) { animation-delay: 0.3s; }
+    }
+  }
+
+  // ── Forgot Link ───────────────────────────────────────
+  &__forgot {
+    font-size: 12px;
+    color: $muted;
+    text-align: right;
+    text-decoration: none;
+    display: block;
+    margin-top: -6px;
+    transition: color 0.2s ease;
+    animation: fadeSlideUp 0.7s ease 0.35s both;
+
+    &:hover { color: $purple; }
+  }
+
+  // ── Submit Button ─────────────────────────────────────
+  &__form-button {
+    width: 100%;
+    padding: 14px;
+    background: $grad;
+    border: none;
+    border-radius: $radius;
+    color: #fff;
+    font-family: $font;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 20px rgba($purple, 0.3);
+    animation: fadeSlideUp 0.7s ease 0.4s both;
+
+    &::before { content: '🎧  '; font-size: 15px; }
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.1);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba($purple, 0.45);
+      &::after { opacity: 1; }
+    }
+
+    &:active   { transform: translateY(0); }
+    &:disabled { opacity: 0.55; pointer-events: none; }
+  }
+
+  // ── Divider ───────────────────────────────────────────
+  &__divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: fadeSlideUp 0.7s ease 0.45s both;
+
+    &::before, &::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: $border;
+    }
+
+    span {
+      font-size: 11px;
+      color: $muted;
+      letter-spacing: 0.1em;
+    }
+  }
+
+  // ── Google Button ─────────────────────────────────────
+  &__google-btn {
+    width: 100%;
+    @include flex-center;
+    gap: 10px;
+    padding: 13px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid $border;
+    border-radius: $radius;
+    color: $text;
+    font-family: $font;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition:
+      border-color 0.25s ease,
+      background   0.25s ease,
+      transform    0.2s ease,
+      box-shadow   0.25s ease;
+    animation: fadeSlideUp 0.7s ease 0.5s both;
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    &:active { transform: translateY(0); }
+
+    svg { width: 18px; height: 18px; flex-shrink: 0; }
+  }
+
+  // ── Register Link ─────────────────────────────────────
+  &__register-link {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 13px;
+    color: $sub;
+    animation: fadeSlideUp 0.7s ease 0.55s both;
+
+    &-anchor {
+      color: $pink;
+      font-weight: 500;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+
+      &:hover { opacity: 0.75; }
+    }
+  }
+}

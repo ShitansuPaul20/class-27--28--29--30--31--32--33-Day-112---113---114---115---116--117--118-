@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { model } = require('mongoose');
 const BlacklistModel = require('../models/blacklist.model');
+const redis = require('../config/cache');
 
 async function registerController(req, res){
     try {
@@ -98,7 +99,9 @@ async function logoutController(req, res){
     token = req.cookies.token;
 
     res.clearCookie("token");
-    await BlacklistModel.create({ token });
+
+    await redis.set(token, Date.now().toString() , "EX", 3*24*60*60);
+
     res.status(200).json({
         message: "User logged out successfully"
     });
