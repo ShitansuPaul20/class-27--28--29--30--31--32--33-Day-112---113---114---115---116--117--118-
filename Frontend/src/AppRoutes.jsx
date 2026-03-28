@@ -3,12 +3,13 @@ import Register from "./features/Auth/pages/Register";
 import { Routes , Route } from "react-router";
 import FaceExpression from "./features/expression/components/FaceExpression";
 import "./features/shared/style/global.scss"
+import Protected from "./features/Auth/components/Protected";
 
 const AppRoutes = () => {
   return (
     <>
         <Routes>
-            <Route path="/" element={<FaceExpression/>}/>
+            <Route path="/" element={<Protected><FaceExpression/></Protected>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/register" element={<Register/>}/>
         </Routes>
