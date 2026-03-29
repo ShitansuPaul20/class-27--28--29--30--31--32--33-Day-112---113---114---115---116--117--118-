@@ -1,29 +1,54 @@
 const songModel = require('../models/song.model');
+const id3 = require('node-id3');
+const storageService = require('../services/storage.service');
+
 
 async function uploadSong(req, res) {
-    try {
-        // const title  = req.body;
 
-        const songFile = req.file;
-        console.log(songFile)
+    const songBuffer = req.file.buffer
+    const { mood } = req.body
 
-        if (!songFile) {
-            return res.status(400).json({ error: 'No song file uploaded' });
-        }
+    const tags = id3.read(songBuffer)
 
-            // const newSong = new songModel({
-            //     url: songFile.path,
-            //     posterUrl: 'https://via.placeholder.com/150', // Placeholder poster URL
-            //     title: title,
-            // });
-            // await newSong.save();
+    const [ songFile, posterFile ] = await Promise.all([
+        storageService.uploadFile({
+            buffer: songBuffer,
+            filename: tags.title + ".mp3",
+            folder: "/cohort-2/moodify/songs"
+        }),
+        storageService.uploadFile({
+            buffer: tags.image.imageBuffer,
+            filename: tags.title + ".jpeg",
+            folder: "/cohort-2/moodify/posters"
+        })
+    ])
 
+    const song = await songModel.create({
+        title: tags.title,
+        url: songFile.url,
+        posterUrl: posterFile.url,
+        mood
+    })
 
-        res.status(201).json({ message: 'Song uploaded successfully' });
-    } catch (error) {
-        console.error('Error uploading song:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
+    res.status(201).json({
+        message: "song created successfully",
+        song
+    })
+
+}
+async function getSong(req, res) {
+
+    const { mood } = req.query
+
+    const song = await songModel.findOne({
+        mood,
+    })
+
+    res.status(200).json({
+        message: "song fetched successfully.",
+        song: song,
+    })
+
 }
 
 // async function getSongs(req, res) {
@@ -49,6 +74,6 @@ async function uploadSong(req, res) {
 
 module.exports = {
     uploadSong,
-    // getSongs,
+    getSong,
     // deleteSong,
 };
