@@ -1,0 +1,573 @@
+.player-footer-container {
+  position: relative;
+  width: 100%;
+}
+
+.player-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.95), rgba(118, 75, 162, 0.95));
+  border-top: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  min-height: 60px;
+  width: 100%;
+  box-sizing: border-box;
+
+  audio {
+    display: none;
+  }
+}
+
+/* Song Image Section */
+.song-image-section {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+  .song-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+/* Song Info and Expression Section */
+.song-info-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+  min-width: 150px;
+
+  .song-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+
+    .song-title {
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .song-mood {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 10px;
+      margin: 0;
+      opacity: 0.9;
+    }
+  }
+
+  .emotion-display {
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+}
+
+/* Progress Section */
+.progress-section {
+  flex: 1;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  .progress-bar {
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.3);
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: white;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+
+      &:hover {
+        transform: scale(1.15);
+      }
+    }
+
+    &::-moz-range-thumb {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: white;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+
+      &:hover {
+        transform: scale(1.15);
+      }
+    }
+
+    &::-moz-range-track {
+      background: none;
+      border: none;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+  }
+
+  .time-display {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+  }
+}
+
+/* Main Controls */
+.controls-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+
+  .skip-btn {
+    font-size: 16px;
+    padding: 6px 8px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    color: white;
+
+    &:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.08);
+    }
+
+    &:active:not(:disabled) {
+      transform: scale(0.95);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .icon {
+      display: block;
+      font-size: 18px;
+    }
+  }
+
+  .play-pause-btn {
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #667eea;
+    font-weight: bold;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+    .icon {
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &:hover {
+      background: white;
+      transform: scale(1.1);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    &.playing {
+      animation: pulse-play 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse-play {
+      0%, 100% {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+      50% {
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+      }
+    }
+  }
+}
+
+/* Volume Controls */
+.volume-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+
+  .volume-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    padding: 6px 8px;
+    transition: all 0.3s ease;
+    font-size: 16px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.08);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    .icon {
+      display: block;
+      font-size: 16px;
+    }
+  }
+
+  .volume-slider {
+    width: 60px;
+    height: 3px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.3);
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: white;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    &::-moz-range-thumb {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: white;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    &::-moz-range-track {
+      background: none;
+      border: none;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+  }
+}
+
+/* Speed Control */
+.speed-control {
+  flex-shrink: 0;
+
+  .speed-selector {
+    padding: 6px 8px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    font-weight: 600;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 50px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.6);
+    }
+
+    &:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.3);
+      border-color: white;
+    }
+
+    option {
+      background: #667eea;
+      color: white;
+      padding: 6px;
+    }
+  }
+}
+
+/* Navigation Controls */
+.navigation-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+
+  .nav-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    padding: 6px 8px;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .icon {
+      display: block;
+      font-size: 16px;
+    }
+
+    &:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.08);
+    }
+
+    &:active:not(:disabled) {
+      transform: scale(0.95);
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .player-footer {
+    gap: 10px;
+    padding: 10px 14px;
+    min-height: 55px;
+  }
+
+  .song-image-section {
+    width: 45px;
+    height: 45px;
+  }
+
+  .song-info-section {
+    min-width: 120px;
+
+    .song-details {
+      .song-title {
+        font-size: 11px;
+      }
+
+      .song-mood {
+        font-size: 9px;
+      }
+    }
+
+    .emotion-display {
+      font-size: 20px;
+    }
+  }
+
+  .progress-section {
+    min-width: 100px;
+
+    .time-display {
+      font-size: 8px;
+    }
+  }
+
+  .controls-main .play-pause-btn {
+    width: 36px;
+    height: 36px;
+
+    .icon {
+      font-size: 18px;
+    }
+  }
+
+  .speed-control .speed-selector {
+    font-size: 10px;
+    min-width: 45px;
+  }
+}
+
+@media (max-width: 768px) {
+  .player-footer {
+    gap: 8px;
+    padding: 8px 12px;
+    min-height: 52px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .song-image-section {
+    width: 40px;
+    height: 40px;
+    order: 1;
+  }
+
+  .song-info-section {
+    min-width: auto;
+    order: 2;
+    flex: 0 0 auto;
+
+    .song-details {
+      .song-title {
+        font-size: 10px;
+      }
+
+      .song-mood {
+        font-size: 8px;
+      }
+    }
+
+    .emotion-display {
+      font-size: 18px;
+    }
+  }
+
+  .progress-section {
+    min-width: 80px;
+    order: 3;
+    flex: 1;
+
+    .time-display {
+      font-size: 7px;
+    }
+  }
+
+  .controls-main {
+    order: 4;
+    gap: 6px;
+
+    .play-pause-btn {
+      width: 34px;
+      height: 34px;
+
+      .icon {
+        font-size: 16px;
+      }
+    }
+
+    .skip-btn {
+      padding: 5px 6px;
+      font-size: 14px;
+
+      .icon {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .volume-controls {
+    order: 5;
+    gap: 4px;
+
+    .volume-btn {
+      padding: 5px 6px;
+      font-size: 14px;
+    }
+
+    .volume-slider {
+      width: 50px;
+    }
+  }
+
+  .speed-control {
+    order: 6;
+
+    .speed-selector {
+      font-size: 9px;
+      min-width: 42px;
+      padding: 5px 6px;
+    }
+  }
+
+  .navigation-controls {
+    order: 7;
+    gap: 4px;
+
+    .nav-btn {
+      padding: 5px 6px;
+      font-size: 12px;
+
+      .icon {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .player-footer {
+    gap: 6px;
+    padding: 6px 10px;
+    min-height: 48px;
+  }
+
+  .song-image-section {
+    width: 36px;
+    height: 36px;
+  }
+
+  .song-info-section {
+    .emotion-display {
+      font-size: 16px;
+    }
+  }
+
+  .volume-controls .volume-slider {
+    width: 40px;
+  }
+
+  .speed-control .speed-selector {
+    font-size: 8px;
+    min-width: 40px;
+  }
+}

@@ -40,40 +40,30 @@ async function getSong(req, res) {
 
     const { mood } = req.query
 
-    const song = await songModel.findOne({
+    const songs = await songModel.find({
         mood,
     })
 
     res.status(200).json({
-        message: "song fetched successfully.",
-        song: song,
+        message: "songs fetched successfully.",
+        songs: songs,
     })
 
 }
 
-// async function getSongs(req, res) {
-//     try {
-//         const songs = await songModel.find();
-//         res.status(200).json(songs);
-//     } catch (error) {
-//         console.error('Error fetching songs:', error);
-//         res.status(500).json({ error: 'Internal server error' });
-//     }
-// }
+async function getSongs(req, res) {
+    try {
+        const songs = await songModel.find();
+        res.status(200).json(songs);
+    } catch (error) {
+        console.error('Error fetching songs:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
 
-// async function deleteSong(req, res) {
-//     try {
-//         const { id } = req.params;
-//         await songModel.findByIdAndDelete(id);
-//         res.status(200).json({ message: 'Song deleted successfully' });
-//     } catch (error) {
-//         console.error('Error deleting song:', error);
-//         res.status(500).json({ error: 'Internal server error' });
-//     }       
-// }
 
 module.exports = {
     uploadSong,
     getSong,
-    // deleteSong,
+    getSongs,
 };

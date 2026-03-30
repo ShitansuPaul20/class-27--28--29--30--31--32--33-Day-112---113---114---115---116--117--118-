@@ -3,8 +3,9 @@ import Webcam from "react-webcam";
 import { FaceLandmarker, FilesetResolver } from "@mediapipe/tasks-vision";
 import "../../shared/style/global.scss";
 import { captureExpression } from "../utils/utils";
+import "../style/face-expression.scss";
 
-const FaceExpression = () => {
+const FaceExpression = ({ onEmotionChange }) => {
   const webcamRef = useRef(null);
   const [faceLandmarker, setFaceLandmarker] = useState(null);
   const [currentEmotions, setCurrentEmotions] = useState({
@@ -12,6 +13,7 @@ const FaceExpression = () => {
     surprised: false,
     sorrow: false,
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const initializeModel = async () => {
@@ -31,8 +33,10 @@ const FaceExpression = () => {
         });
 
         setFaceLandmarker(landmarker);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error initializing the model:", error);
+        setIsLoading(false);
       }
     };
 
@@ -40,48 +44,53 @@ const FaceExpression = () => {
   }, []);
 
   const handleCaptureExpression = () => {
-    captureExpression(faceLandmarker, webcamRef, setCurrentEmotions);
+    captureExpression(faceLandmarker, webcamRef, setCurrentEmotions, onEmotionChange);
   };
 
   return (
-    <div style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "center", gap: "20px", marginTop: "20px" }}>
-      <Webcam
-        ref={webcamRef}
-        audio={false}
-        style={{ width: "640px", height: "480px", borderRadius: "8px" }}
-        videoConstraints={{ facingMode: "user" }}
-      />
+    <div className="face-expression-container">
+      <div className="face-expression-card">
+        <h1 className="title">Let's detect your mood 🎵</h1>
+        <p className="subtitle">Look at the camera and we'll read your expression</p>
 
-      <button
-        onClick={handleCaptureExpression}
-        disabled={!faceLandmarker}
-        style={{
-          padding: "12px 24px",
-          fontSize: "18px",
-          backgroundColor: faceLandmarker ? "#3b82f6" : "#9ca3af",
-          color: "white",
-          border: "none",
-          borderRadius: "8px",
-          cursor: faceLandmarker ? "pointer" : "not-allowed",
-          fontWeight: "bold",
-        }}
-      >
-        {faceLandmarker ? "Detect Expression Now" : "Loading Model..."}
-      </button>
-
-      <div style={{ background: "#1f2937", color: "#fff", padding: "20px", borderRadius: "8px", fontFamily: "sans-serif", width: "300px", textAlign: "center" }}>
-        <h3 style={{ margin: "0 0 15px 0" }}>Last Detected Emotion:</h3>
-        <div style={{ fontSize: "20px" }}>
-          <p style={{ margin: "8px 0", color: currentEmotions.smiling ? "#4ade80" : "white" }}>
-            Smiling: {currentEmotions.smiling ? "Yes 😊" : "No"}
-          </p>
-          <p style={{ margin: "8px 0", color: currentEmotions.surprised ? "#facc15" : "white" }}>
-            Surprised: {currentEmotions.surprised ? "Yes 😲" : "No"}
-          </p>
-          <p style={{ margin: "8px 0", color: currentEmotions.sorrow ? "#60a5fa" : "white" }}>
-            Sorrow: {currentEmotions.sorrow ? "Yes 😔" : "No"}
-          </p>
+        <div className="webcam-wrapper">
+          {isLoading && (
+            <div className="loading-overlay">
+              <div className="spinner"></div>
+              <p>Loading face detection model...</p>
+            </div>
+          )}
+          <Webcam
+            ref={webcamRef}
+            audio={false}
+            className="webcam-stream"
+            videoConstraints={{ facingMode: "user" }}
+          />
+          <div className="webcam-border"></div>
         </div>
+
+        <div className="emotion-status">
+          <div className="status-item">
+            <span className={currentEmotions.smiling ? "active" : ""}>😊 Smiling</span>
+          </div>
+          <div className="status-item">
+            <span className={currentEmotions.surprised ? "active" : ""}>😲 Surprised</span>
+          </div>
+          <div className="status-item">
+            <span className={currentEmotions.sorrow ? "active" : ""}>😢 Sad</span>
+          </div>
+        </div>
+
+        <button
+          onClick={handleCaptureExpression}
+          disabled={!faceLandmarker || isLoading}
+          className="btn-detect-expression"
+        >
+          <span className="btn-icon">✨</span>
+          <span className="btn-text">
+            {faceLandmarker ? "Detect My Mood" : "Loading..."}
+          </span>
+        </button>
       </div>
     </div>
   );

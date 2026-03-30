@@ -1,0 +1,149 @@
+// ── Theme Variables ──────────────────────────────────────
+$bg-dark:      #080b14;
+$surface:      #0e1220;
+$purple:       #8b5cf6;
+$pink:         #ec4899;
+$text:         #f1f5f9;
+$sub:          #94a3b8;
+$grad:         linear-gradient(135deg, $purple, $pink);
+
+// ── Keyframes ──────────────────────────────────────────
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+// ── Loading Screen ─────────────────────────────────────
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: $bg-dark;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.4s ease-out;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    animation: spin 8s linear infinite;
+  }
+
+  &::before {
+    width: 200px;
+    height: 200px;
+    top: -50px;
+    left: -50px;
+    border: 2px solid transparent;
+    border-top-color: $purple;
+    opacity: 0.2;
+  }
+
+  &::after {
+    width: 300px;
+    height: 300px;
+    bottom: -100px;
+    right: -100px;
+    border: 2px solid transparent;
+    border-bottom-color: $pink;
+    opacity: 0.1;
+    animation-duration: 10s;
+    animation-direction: reverse;
+  }
+}
+
+.loading-content {
+  position: relative;
+  text-align: center;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  animation: scaleUp 0.6s ease-out;
+
+  .emotion-large {
+    font-size: 80px;
+    animation: bounce 1.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba($purple, 0.3));
+
+    @media (max-width: 640px) {
+      font-size: 60px;
+    }
+  }
+
+  .loading-text {
+    font-size: 24px;
+    font-weight: 700;
+    color: $text;
+    margin: 0;
+    letter-spacing: 0.5px;
+
+    @media (max-width: 640px) {
+      font-size: 20px;
+    }
+  }
+
+  .loading-subtitle {
+    font-size: 14px;
+    color: $sub;
+    margin: 0;
+    max-width: 300px;
+    line-height: 1.5;
+  }
+}
+
+// ── Loader Dots ────────────────────────────────────────
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+}
+
+.loader-dots {
+  display: flex;
+  gap: 8px;
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $grad;
+    animation: bounce 1.4s ease-in-out infinite;
+
+    &:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+  }
+}

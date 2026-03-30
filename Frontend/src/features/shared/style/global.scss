@@ -7,10 +7,11 @@
 html, body, #root {
   width: 100vw;
   height: 100vh;
-  background-color: #101010;
+  background: linear-gradient(135deg, #080b14 0%, #0e1220 50%, #080b14 100%);
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: 'Outfit', 'Segoe UI', sans-serif;
 }
 
 body {
@@ -19,4 +20,69 @@ body {
   align-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background: transparent;
+  color: #f1f5f9;
+  overflow: hidden;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #8b5cf6, #ec4899);
+  border-radius: 4px;
+
+  &:hover {
+    background: linear-gradient(180deg, #a78bfa, #f472b6);
+  }
+}
+
+/* Firefox Scrollbar */
+* {
+  scrollbar-color: #8b5cf6 rgba(255, 255, 255, 0.05);
+  scrollbar-width: thin;
+}
+
+/* Text Selection */
+::selection {
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  color: #f1f5f9;
+}
+
+::-moz-selection {
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  color: #f1f5f9;
+}
+
+/* Input Focus */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
+/* Button Reset */
+button {
+  font-family: 'Outfit', 'Segoe UI', sans-serif;
+}
+
+/* Link Reset */
+a {
+  color: inherit;
+  text-decoration: none;
 }

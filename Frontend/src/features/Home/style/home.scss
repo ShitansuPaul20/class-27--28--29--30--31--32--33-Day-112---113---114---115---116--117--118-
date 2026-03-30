@@ -1,0 +1,59 @@
+// ── Theme Variables ──────────────────────────────────────
+$bg-dark:      #080b14;
+$purple:       #8b5cf6;
+$pink:         #ec4899;
+$grad:         linear-gradient(135deg, $purple, $pink);
+
+// ── Main Container ────────────────────────────────────
+.home-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  font-family: 'Outfit', 'Segoe UI', sans-serif;
+  position: relative;
+  z-index: 1;
+}
+
+.home-detection-wrapper {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 640px) {
+    max-width: 100%;
+    padding: 0;
+  }
+}
+
+.player-footer-wrapper {
+  width: 100%;
+}
+
+// ── Responsive Design ──────────────────────────────────
+@media (max-width: 1024px) {
+  .home-container {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-container {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-container {
+    padding: 4px;
+    min-height: 100vh;
+  }
+
+  .home-detection-wrapper {
+    padding: 0;
+  }
+}
+

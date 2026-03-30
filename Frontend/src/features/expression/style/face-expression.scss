@@ -1,0 +1,247 @@
+// ── Theme Variables ──────────────────────────────────────
+$bg-dark:      #080b14;
+$surface:      #0e1220;
+$border:       rgba(255, 255, 255, 0.07);
+$purple:       #8b5cf6;
+$pink:         #ec4899;
+$text:         #f1f5f9;
+$muted:        #64748b;
+$sub:          #94a3b8;
+$grad:         linear-gradient(135deg, $purple, $pink);
+$radius:       16px;
+$font:         'Outfit', 'Segoe UI', sans-serif;
+
+// ── Keyframes ──────────────────────────────────────────
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// ── Main Container ─────────────────────────────────────
+.face-expression-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  font-family: $font;
+  position: relative;
+  z-index: 1;
+}
+
+.face-expression-card {
+  width: 100%;
+  max-width: 600px;
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: $radius;
+  padding: 32px 24px;
+  backdrop-filter: blur(20px);
+  animation: fadeSlideIn 0.6s ease-out;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+              0 0 60px rgba($purple, 0.1);
+
+  @media (max-width: 640px) {
+    padding: 24px 16px;
+  }
+}
+
+// ── Title & Subtitle ───────────────────────────────────
+.title {
+  margin: 0 0 8px 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: $text;
+  text-align: center;
+
+  @media (max-width: 640px) {
+    font-size: 24px;
+  }
+}
+
+.subtitle {
+  margin: 0 0 32px 0;
+  font-size: 14px;
+  color: $sub;
+  text-align: center;
+  line-height: 1.5;
+}
+
+// ── Webcam Wrapper ────────────────────────────────────
+.webcam-wrapper {
+  position: relative;
+  margin-bottom: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .webcam-stream {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 
+      0 0 0 4px $surface,
+      0 0 0 6px $border,
+      0 20px 40px rgba(0, 0, 0, 0.4),
+      inset 0 0 30px rgba($purple, 0.1);
+    border: 2px solid transparent;
+    background: radial-gradient($surface, $surface) padding-box,
+                 $grad border-box;
+
+    &::-webkit-video-controls {
+      display: none;
+    }
+
+    @media (max-width: 640px) {
+      width: 220px;
+      height: 220px;
+    }
+  }
+
+  .webcam-border {
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    border: 2px solid $border;
+    pointer-events: none;
+    animation: pulse 3s ease-in-out infinite;
+
+    @media (max-width: 640px) {
+      width: 220px;
+      height: 220px;
+    }
+  }
+
+  .loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    background: rgba($bg-dark, 0.9);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    z-index: 10;
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba($purple, 0.3);
+      border-top-color: $purple;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    p {
+      color: $sub;
+      font-size: 12px;
+      margin: 0;
+    }
+  }
+}
+
+// ── Emotion Status ─────────────────────────────────────
+.emotion-status {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+
+  .status-item {
+    padding: 10px 16px;
+    background: rgba($purple, 0.1);
+    border: 1px solid rgba($purple, 0.3);
+    border-radius: 8px;
+    font-size: 14px;
+    color: $sub;
+    transition: all 0.3s ease;
+
+    span {
+      display: block;
+      text-align: center;
+
+      &.active {
+        color: $purple;
+        animation: pulse 0.5s ease-out;
+      }
+    }
+
+    &:has(.active) {
+      background: rgba($purple, 0.15);
+      border-color: $purple;
+      box-shadow: 0 0 20px rgba($purple, 0.2);
+    }
+  }
+}
+
+// ── Detect Button ──────────────────────────────────────
+.btn-detect-expression {
+  width: 100%;
+  padding: 16px 24px;
+  background: $grad;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+  font-family: $font;
+  box-shadow: 0 8px 24px rgba($purple, 0.3);
+
+  .btn-icon {
+    font-size: 18px;
+  }
+
+  .btn-text {
+    letter-spacing: 0.5px;
+  }
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba($purple, 0.4),
+                0 0 20px rgba($pink, 0.2);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 4px 16px rgba($purple, 0.3);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: linear-gradient(135deg, #666, #555);
+  }
+
+  @media (max-width: 640px) {
+    padding: 14px 20px;
+    font-size: 15px;
+  }
+}
