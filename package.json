@@ -1,0 +1,19 @@
+{
+  "name": "vibee",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm install --prefix Frontend && npm run build --prefix Frontend",
+    "start": "node Backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShitansuPaul20/class-27--28--29--30--31--32--33-Day-112---113---114---115---116--117--118-.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
