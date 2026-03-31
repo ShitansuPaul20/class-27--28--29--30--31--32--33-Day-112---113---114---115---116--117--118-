@@ -42,8 +42,8 @@ const login = () => {
           setValue={setPassword}
           value={password}
           className='login__form-group' label="Password" id="password" type="password" placeholder="Enter your password" required={true} />
-          <button type='submit' className='login__form-button' disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
+          <button type='submit' className='login__form-button'>
+            {'Login'}
           </button>
         </form>
         <p className='login__register-link'>Don't have an account? <a href='/register' className='login__register-link-anchor'>Register here</a></p>

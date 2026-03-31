@@ -58,8 +58,8 @@ const Register = () => {
             placeholder="Enter your password" 
             required={true} 
           />
-          <button type='submit' className='register__form-button' disabled={loading}>
-            {loading ? 'Registering...' : 'Register'}
+          <button type='submit' className='register__form-button'>
+            {'Register'}
           </button>
         </form>
         <p className='register__login-link'>Already have an account? <a href='/login' className='register__login-link-anchor'>Login here</a></p>

@@ -5,15 +5,26 @@ import "./features/shared/style/global.scss"
 import Protected from "./features/Auth/components/Protected";
 import Home from "./features/Home/pages/Home";
 import Welcome from "./features/Welcome/pages/Welcome";
+import { useAuth } from "./features/Auth/hook/useAuth";
 
 const AppRoutes = () => {
   const hasSeenWelcome = localStorage.getItem('welcomeShown') === 'true';
-  console.log('AppRoutes: hasSeenWelcome =', hasSeenWelcome);
+  const { User } = useAuth();
+  
+  console.log('AppRoutes: hasSeenWelcome =', hasSeenWelcome, '| User =', User);
 
   return (
     <>
         <Routes>
-            <Route path="/" element={!hasSeenWelcome ? <Welcome/> : <Protected><Home/></Protected>}/>
+            <Route path="/" element={
+              !hasSeenWelcome ? (
+                <Welcome/>
+              ) : User ? (
+                <Protected><Home/></Protected>
+              ) : (
+                <Login/>
+              )
+            }/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/register" element={<Register/>}/>
         </Routes>
