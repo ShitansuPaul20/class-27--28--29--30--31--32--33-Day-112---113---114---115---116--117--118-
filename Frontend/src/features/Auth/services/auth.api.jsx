@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api/auth', // Update with your backend URL
+  baseURL: 'https://vibee-jw9q.onrender.com/api', // Update with your backend URL
   withCredentials: true, // Include cookies in requests
 });
 

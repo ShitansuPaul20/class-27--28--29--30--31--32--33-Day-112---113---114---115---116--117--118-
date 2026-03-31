@@ -8,7 +8,7 @@ const path = require('path');
 
 const allowedOrigins = [
     'http://localhost:5173', 
-    'https://your-app-name.onrender.com' 
+    'https://vibee-jw9q.onrender.com/' 
 ];
 
 app.use(cors({
