@@ -1,15 +1,20 @@
 import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import '../style/welcome.scss'
 
 const Welcome = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
+    console.log('Welcome component mounted');
     const timer = setTimeout(() => {
+      console.log('3 seconds passed, setting localStorage and navigating to /login');
       localStorage.setItem('welcomeShown', 'true');
-      window.location.href = '/login';
+      navigate('/login');
     }, 3000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [navigate]);
 
   return (
     <main className='welcome'>

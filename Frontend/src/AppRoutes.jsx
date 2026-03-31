@@ -8,6 +8,7 @@ import Welcome from "./features/Welcome/pages/Welcome";
 
 const AppRoutes = () => {
   const hasSeenWelcome = localStorage.getItem('welcomeShown') === 'true';
+  console.log('AppRoutes: hasSeenWelcome =', hasSeenWelcome);
 
   return (
     <>
