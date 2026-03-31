@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://vibee-jw9q.onrender.com/api',
+  baseURL: 'https://vibee-jw9q.onrender.com/api/auth',
   withCredentials: true,
 });
 
