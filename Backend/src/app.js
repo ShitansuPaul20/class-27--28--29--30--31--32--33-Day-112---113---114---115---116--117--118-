@@ -8,7 +8,7 @@ const path = require('path');
 
 const allowedOrigins = [
     'http://localhost:5173', 
-    'https://vibee-jw9q.onrender.com/' 
+    'https://vibee-jw9q.onrender.com' 
 ];
 
 app.use(cors({
@@ -30,7 +30,6 @@ app.use(cookieParser());
 app.use('/api/auth', authRoutes);
 app.use('/api/songs', songRoutes);
 
-// Isme :any ek variable name hai aur * wildcard hai
 app.use((req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
