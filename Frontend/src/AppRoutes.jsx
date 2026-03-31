@@ -7,9 +7,7 @@ import Home from "./features/Home/pages/Home";
 import Welcome from "./features/Welcome/pages/Welcome";
 
 const AppRoutes = () => {
-  console.log('APProutes RENDERING');
-  // TEMPORARY: Always show welcome first to test
-  const hasSeenWelcome = false;
+  const hasSeenWelcome = localStorage.getItem('welcomeShown') === 'true';
 
   return (
     <>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect } from 'react'
 import FloatingCanvas from '../../shared/components/FloatingCanvas'
 import '../../shared/style/global.scss'
 import '../style/login.scss'
@@ -9,11 +9,18 @@ import { useNavigate } from 'react-router-dom'
 
 const login = () => {
 
-  const { loading, handleLogin } = useAuth();
+  const { loading, handleLogin, setLoading } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+   
+    if (setLoading) {
+      setLoading(false);
+    }
+  }, [setLoading]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -36,7 +43,7 @@ const login = () => {
           value={password}
           className='login__form-group' label="Password" id="password" type="password" placeholder="Enter your password" required={true} />
           <button type='submit' className='login__form-button' disabled={loading}>
-            {!loading ? 'Logging in...' : 'Login'}
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
         <p className='login__register-link'>Don't have an account? <a href='/register' className='login__register-link-anchor'>Register here</a></p>

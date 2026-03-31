@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { songContext } from "./songContext";
 
 export const SongContextProvider = ({ children }) => {
    

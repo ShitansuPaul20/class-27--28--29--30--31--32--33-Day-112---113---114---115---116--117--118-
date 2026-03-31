@@ -59,7 +59,7 @@ const Register = () => {
             required={true} 
           />
           <button type='submit' className='register__form-button' disabled={loading}>
-            {!loading ? 'Registering...' : 'Register'}
+            {loading ? 'Registering...' : 'Register'}
           </button>
         </form>
         <p className='register__login-link'>Already have an account? <a href='/login' className='register__login-link-anchor'>Login here</a></p>
