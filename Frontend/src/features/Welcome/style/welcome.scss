@@ -1,0 +1,133 @@
+.welcome {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  position: relative;
+  overflow: hidden;
+
+  &__container {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  &__content {
+    text-align: center;
+    animation: fadeIn 0.8s ease-in-out;
+  }
+
+  &__title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 3rem;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, #00d4ff 0%, #7b2ff7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+    animation: slideDown 0.6s ease-out;
+  }
+
+  &__loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+    height: 80px;
+  }
+
+  &__spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(0, 212, 255, 0.2);
+    border-top: 4px solid #00d4ff;
+    border-radius: 50%;
+    animation: spin 1.5s linear infinite;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+  }
+
+  &__subtitle {
+    font-size: 1.1rem;
+    color: #b0b0b0;
+    letter-spacing: 0.5px;
+    animation: fadeIn 1s ease-in-out 0.5s both;
+  }
+}
+
+// Animations
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .welcome {
+    &__title {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    &__spinner {
+      width: 50px;
+      height: 50px;
+      border-width: 3px;
+    }
+
+    &__subtitle {
+      font-size: 0.95rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome {
+    &__title {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    &__spinner {
+      width: 40px;
+      height: 40px;
+      border-width: 2px;
+    }
+
+    &__subtitle {
+      font-size: 0.9rem;
+    }
+  }
+}
