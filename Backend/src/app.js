@@ -24,14 +24,21 @@ app.use(cors({
     credentials: true
 }));
 
+const publicPath = path.join(__dirname, '..', 'public');
+
+app.use(express.static(publicPath));
+
 app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/songs', songRoutes);
 
+
 app.use((req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+    if (!req.url.startsWith('/api')) {
+        res.sendFile(path.join(publicPath, 'index.html'));
+    }
 });
 
 module.exports = app;
