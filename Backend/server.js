@@ -1,6 +1,6 @@
 require('dotenv').config();
-const app = require('./src/app');
-const connectToDB = require('./src/config/database');
+const app = require('./src/app.js');
+const connectToDB = require('./src/config/database.js');
 
 connectToDB();
 
