@@ -1,0 +1,188 @@
+.confirm-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 9990;
+  backdrop-filter: blur(4px);
+}
+
+.delete-confirmation-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  z-index: 9991;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+
+  .modal-content {
+    padding: 2.5rem;
+    text-align: center;
+
+    .warning-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      color: #333;
+      margin: 0 0 0.5rem 0;
+      font-weight: 700;
+    }
+
+    .warning-message {
+      color: #666;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin: 1rem 0 1.5rem 0;
+    }
+
+    .song-details {
+      background: rgba(102, 126, 234, 0.1);
+      border: 1px solid rgba(102, 126, 234, 0.2);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      text-align: left;
+
+      p {
+        margin: 0.5rem 0;
+        color: #333;
+        font-size: 0.95rem;
+
+        strong {
+          color: #667eea;
+        }
+      }
+    }
+
+    .confirmation-input {
+      margin-bottom: 1.5rem;
+      text-align: left;
+
+      .instruction {
+        color: #333;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .song-title-display {
+        display: block;
+        background: #f5f5f5;
+        padding: 0.5rem;
+        border-radius: 5px;
+        margin-bottom: 0.75rem;
+        color: #667eea;
+        font-weight: 600;
+      }
+
+      .confirmation-input-field {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.2s;
+        font-family: inherit;
+
+        &:focus {
+          outline: none;
+          border-color: #667eea;
+          box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        &.match {
+          border-color: #4caf50;
+          background: rgba(76, 175, 80, 0.05);
+        }
+      }
+
+      .error-text {
+        color: #f33;
+        font-size: 0.85rem;
+        margin-top: 0.5rem;
+      }
+
+      .success-text {
+        color: #4caf50;
+        font-size: 0.85rem;
+        margin-top: 0.5rem;
+        font-weight: 600;
+      }
+    }
+
+    .modal-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+
+      .cancel-btn,
+      .delete-btn {
+        padding: 0.75rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-size: 0.95rem;
+      }
+
+      .cancel-btn {
+        background: #f5f5f5;
+        color: #333;
+        border: 1px solid #e0e0e0;
+
+        &:hover {
+          background: #eee;
+        }
+      }
+
+      .delete-btn {
+        background: #ff5252;
+        color: white;
+
+        &.enabled {
+          &:hover {
+            background: #ff3838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 50, 50, 0.3);
+          }
+        }
+
+        &.disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .delete-confirmation-modal {
+    width: 95%;
+
+    .modal-content {
+      padding: 1.5rem;
+
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      .modal-buttons {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+}

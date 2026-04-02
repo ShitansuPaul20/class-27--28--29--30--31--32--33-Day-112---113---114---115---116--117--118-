@@ -17,8 +17,33 @@ const userSchema = new mongoose.Schema({
         required: [true, "Email is required"],
         unique: true,
         match: [/\S+@\S+\.\S+/, "Please use a valid email address"]
-    }
-})
+    },
+    fullName:{
+        type: String,
+        default: null,
+    },
+    profilePicture:{
+        type: String,
+        default: null,
+    },
+    songHistory: [{
+        type: {
+            type: String,
+            enum: ['uploaded', 'listened'],
+            required: true,
+        },
+        songId: mongoose.Schema.Types.ObjectId,
+        songTitle: String,
+        mood: {
+            type: String,
+            enum: ['Happy', 'Sad', 'Surprised'],
+        },
+        timestamp: {
+            type: Date,
+            default: Date.now,
+        }
+    }],
+}, { timestamps: true })
 
 userSchema.pre("save", async function() { 
     if (!this.isModified("password")) return;

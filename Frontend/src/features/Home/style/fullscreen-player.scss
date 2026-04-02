@@ -199,6 +199,13 @@ $font:         'Outfit', 'Segoe UI', sans-serif;
     color: $sub;
     margin: 0;
   }
+
+  .song-source {
+    font-size: 11px;
+    color: $muted;
+    margin: 4px 0 0 0;
+    opacity: 0.8;
+  }
 }
 
 // ── Progress Container ────────────────────────────────

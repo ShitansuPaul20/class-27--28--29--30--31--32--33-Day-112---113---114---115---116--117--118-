@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import '../style/fullscreen-player.scss'
 import { useSong } from '../hook/useSong'
+import Navbar from '../../shared/components/Navbar'
 
 const emotionEmojis = {
   smiling: '😊',
@@ -9,7 +10,7 @@ const emotionEmojis = {
 }
 
 const FullScreenPlayer = ({ currentEmotion = 'smiling', onDetectAgain }) => {
-  const { song, goToNextSong, goToPreviousSong, isFirstSong, isLastSong } = useSong()
+  const { song, goToNextSong, goToPreviousSong, isFirstSong, isLastSong, trackSongListen } = useSong()
 
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
@@ -46,6 +47,8 @@ const FullScreenPlayer = ({ currentEmotion = 'smiling', onDetectAgain }) => {
         audioRef.current.pause()
       } else {
         audioRef.current.play()
+        // Track song listen when play is clicked
+        trackSongListen(song?.title, song?.mood)
       }
       setIsPlaying(!isPlaying)
     }
@@ -77,7 +80,9 @@ const FullScreenPlayer = ({ currentEmotion = 'smiling', onDetectAgain }) => {
   }
 
   return (
-    <div className="fullscreen-player">
+    <>
+      <Navbar />
+      <div className="fullscreen-player">
       <audio 
         ref={audioRef} 
         src={song?.url} 
@@ -108,6 +113,11 @@ const FullScreenPlayer = ({ currentEmotion = 'smiling', onDetectAgain }) => {
       <div className="song-info-full">
         <h2 className="song-title">{song?.title || 'Unknown Song'}</h2>
         <p className="song-mood">{song?.mood || 'Mood'}</p>
+        {song?.source && (
+          <p className="song-source">
+            {song.source === 'user' ? '👤 Your Upload' : '🎼 Admin Song'}
+          </p>
+        )}
       </div>
 
       {/* Progress Bar */}
@@ -189,6 +199,7 @@ const FullScreenPlayer = ({ currentEmotion = 'smiling', onDetectAgain }) => {
         />
       </div>
     </div>
+    </>
   )
 }
 

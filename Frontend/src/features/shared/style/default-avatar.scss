@@ -1,0 +1,70 @@
+.default-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 700;
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  .avatar-initials {
+    letter-spacing: 0.5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  &.xs {
+    width: 32px;
+    height: 32px;
+    .avatar-initials {
+      font-size: 0.75rem;
+    }
+  }
+
+  &.sm {
+    width: 40px;
+    height: 40px;
+    .avatar-initials {
+      font-size: 0.9rem;
+    }
+  }
+
+  &.md {
+    width: 50px;
+    height: 50px;
+    .avatar-initials {
+      font-size: 1.1rem;
+    }
+  }
+
+  &.lg {
+    width: 80px;
+    height: 80px;
+    .avatar-initials {
+      font-size: 1.8rem;
+    }
+  }
+
+  &.xl {
+    width: 150px;
+    height: 150px;
+    .avatar-initials {
+      font-size: 3rem;
+    }
+  }
+
+  &.xxl {
+    width: 200px;
+    height: 200px;
+    .avatar-initials {
+      font-size: 4rem;
+    }
+  }
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  }
+}
