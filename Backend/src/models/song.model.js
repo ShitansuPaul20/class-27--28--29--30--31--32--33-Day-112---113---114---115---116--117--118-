@@ -21,6 +21,11 @@ const songSchema = new mongoose.Schema({
             message: 'Mood must be one of Happy, Sad, Surprised'
         }
     },
+    uploadedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: null 
+    },
 });
 
 const songModel = mongoose.model('Song', songSchema);

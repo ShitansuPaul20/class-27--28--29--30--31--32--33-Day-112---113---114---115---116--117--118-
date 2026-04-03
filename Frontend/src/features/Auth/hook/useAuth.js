@@ -1,5 +1,5 @@
 import { AuthContext } from "../authContext";
-import { register, login, logout, fetchUserData } from "../services/auth.api";   
+import { register, login, logout, fetchUserData , updateProfilePicture , fetchUserStats , fetchUserHistory } from "../services/auth.api";   
 import { useContext, useEffect } from "react";
 
 export const useAuth = () => {
@@ -63,6 +63,52 @@ export const useAuth = () => {
             }
         };
 
+        const handleUpdateProfile = async (formData) => {
+            setloading(true);
+            try{
+                const data = await updateProfilePicture(formData);
+                setUser(data);
+            }
+            catch(error){
+                console.log(error);
+            }
+            finally{
+                setloading(false);
+            }
+        };
+
+        const handleUserStats = async () => {
+            setloading(true);
+            try{
+                const data = await fetchUserStats();
+                return data.stats;
+            }
+            catch(error){
+                console.log(error);
+                return null;
+            }
+            finally{
+                setloading(false);
+            }
+        };
+
+        const handleUserHistory = async () => {
+            setloading(true);
+            try{
+                const data = await fetchUserHistory();
+                return data.history;
+            }
+            catch(error){
+                console.log(error);
+                return null;
+            }
+            finally{
+                setloading(false);
+            }
+        };
+
+
+
         useEffect(() => {
             handleGetMe();
         }, []);
@@ -73,7 +119,9 @@ export const useAuth = () => {
         handleRegister,
         handleLogin,
         handleLogout,
-        handleGetMe 
+        handleGetMe,
+        handleUpdateProfile,
+        handleUserStats,
+        handleUserHistory
     });
-
 }

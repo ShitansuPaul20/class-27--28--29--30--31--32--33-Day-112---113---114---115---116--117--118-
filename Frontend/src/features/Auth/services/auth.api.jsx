@@ -71,3 +71,38 @@ export async function fetchUserData() {
         throw error;
     }
 }
+
+export async function updateProfilePicture(file) {
+    try {
+        const formData = new FormData();
+        formData.append('profilePicture', file);
+        const response = await api.put('/update-profile', formData, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        });
+        return response.data;
+    } catch (error) {
+        console.log('API: Update profile picture error:', error.message);
+        throw error;
+    }
+}
+
+export async function fetchUserStats() {
+    try {
+        const response = await api.get('/stats');
+        return response.data.stats;
+    } catch (error) {
+        console.log('API: Fetch user stats error:', error.message);
+        throw error;
+    }
+}
+
+export async function fetchUserHistory() {
+    try {
+        const response = await api.get('/history');
+        return response.data.history;
+    } catch (error) {
+        console.log('API: Fetch user history error:', error.message);
+        throw error;
+    }
+}
+

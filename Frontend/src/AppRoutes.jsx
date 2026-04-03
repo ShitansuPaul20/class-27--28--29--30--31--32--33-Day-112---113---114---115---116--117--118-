@@ -6,6 +6,10 @@ import Protected from "./features/Auth/components/Protected";
 import Home from "./features/Home/pages/Home";
 import Welcome from "./features/Welcome/pages/Welcome";
 import { useAuth } from "./features/Auth/hook/useAuth";
+import Nav from "./features/shared/components/Nav";
+import MobileSidebar from "./features/shared/components/MobileSidebar";
+import Profile from "./features/User/pages/Profile";
+
 
 const AppRoutes = () => {
   const hasSeenWelcome = localStorage.getItem('welcomeShown') === 'true';
@@ -15,6 +19,8 @@ const AppRoutes = () => {
 
   return (
     <>
+        <Nav />
+        <MobileSidebar />
         <Routes>
             <Route path="/" element={
               !hasSeenWelcome ? (
@@ -27,6 +33,7 @@ const AppRoutes = () => {
             }/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/register" element={<Register/>}/>
+            <Route path="/profile" element={<Protected><Profile/></Protected>}/>
         </Routes>
     </>
   )

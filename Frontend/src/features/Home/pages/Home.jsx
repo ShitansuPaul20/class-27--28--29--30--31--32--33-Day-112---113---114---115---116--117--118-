@@ -4,6 +4,8 @@ import FullScreenPlayer from '../components/FullScreenPlayer'
 import LoadingScreen from '../components/LoadingScreen'
 import { useSong } from '../hook/useSong'
 import '../style/home.scss'
+import Nav from '../../shared/components/Nav'
+
 
 const emotionToMoodMap = {
   smiling: 'Happy',
@@ -45,7 +47,7 @@ const Home = () => {
     setTimeout(() => {
       setIsLoading(false)
       setShowPlayer(true)
-    }, 2000)
+    }, 5000)
   }
 
   const handleDetectAgain = () => {
@@ -62,11 +64,14 @@ const Home = () => {
   }
 
   return (
+    <>
+    
     <div className="home-container">
       <div className="home-detection-wrapper">
         <FaceExpression onEmotionChange={handleEmotionChange} />
       </div>
     </div>
+    </>
   )
 }
 

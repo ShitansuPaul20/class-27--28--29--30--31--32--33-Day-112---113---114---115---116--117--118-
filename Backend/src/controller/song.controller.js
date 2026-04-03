@@ -1,12 +1,13 @@
 const songModel = require('../models/song.model');
 const id3 = require('node-id3');
 const storageService = require('../services/storage.service');
-
+const userModel = require('../models/user.model');
 
 async function uploadSong(req, res) {
 
     const songBuffer = req.file.buffer
     const { mood } = req.body
+    const currentUserId = req.user.id;
 
     const tags = id3.read(songBuffer)
 
@@ -27,8 +28,21 @@ async function uploadSong(req, res) {
         title: tags.title,
         url: songFile.url,
         posterUrl: posterFile.url,
-        mood
+        mood,
+        uploadedBy: currentUserId,
     })
+
+    await userModel.findByIdAndUpdate(currentUserId, {
+    $push: {
+        songHistory: {
+            type: 'uploaded',
+            songId: song._id,
+            songTitle: song.title,
+            mood: mood,
+            timestamp: new Date()
+        }
+    }
+    });
 
     res.status(201).json({
         message: "song created successfully",
@@ -39,16 +53,32 @@ async function uploadSong(req, res) {
 async function getSong(req, res) {
 
     const { mood } = req.query
+    const currentUserId = req.user.id;
 
     const songs = await songModel.find({
-        mood,
+        mood: mood,
+        $or: [
+            { uploadedBy: null },           
+            { uploadedBy: currentUserId }    
+        ]
     })
 
     res.status(200).json({
         message: "songs fetched successfully.",
         songs: songs,
     })
+}
 
+async function getSongbyUser(req, res) {
+
+    const currentUserId = req.user.id;
+
+    const songs = await songModel.find({ uploadedBy: currentUserId });
+
+    res.status(200).json({
+        message: "songs fetched successfully.",
+        songs: songs,
+    });
 }
 
 async function getSongs(req, res) {
@@ -65,5 +95,6 @@ async function getSongs(req, res) {
 module.exports = {
     uploadSong,
     getSong,
+    getSongbyUser,
     getSongs,
 };

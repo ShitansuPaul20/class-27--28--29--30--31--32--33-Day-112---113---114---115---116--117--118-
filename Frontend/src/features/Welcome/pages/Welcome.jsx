@@ -11,7 +11,7 @@ const Welcome = () => {
       console.log('3 seconds passed, setting localStorage and navigating to /login');
       localStorage.setItem('welcomeShown', 'true');
       navigate('/login');
-    }, 3000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, [navigate]);

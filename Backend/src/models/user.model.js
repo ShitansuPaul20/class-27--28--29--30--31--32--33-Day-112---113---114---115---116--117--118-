@@ -18,9 +18,10 @@ const userSchema = new mongoose.Schema({
         unique: true,
         match: [/\S+@\S+\.\S+/, "Please use a valid email address"]
     },
-    fullName:{
+    role: {
         type: String,
-        default: null,
+        enum: ['user', 'admin'],
+        default: 'user'
     },
     profilePicture:{
         type: String,
