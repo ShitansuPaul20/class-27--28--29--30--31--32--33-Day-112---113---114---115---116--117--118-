@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import '../style/fullscreen-player.scss'
 import { useSong } from '../hook/useSong'
-import Navbar from '../../shared/components/Navbar'
 
 const emotionEmojis = {
   smiling: '😊',
@@ -81,7 +80,6 @@ const FullScreenPlayer = ({ currentEmotion = 'smiling', onDetectAgain }) => {
 
   return (
     <>
-      <Navbar />
       <div className="fullscreen-player">
       <audio 
         ref={audioRef} 

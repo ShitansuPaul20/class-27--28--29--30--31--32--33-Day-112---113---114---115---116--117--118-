@@ -1,8 +1,6 @@
 import {getSong} from "../service/song.api";
-import { getSongsByMood } from "../../Auth/services/userSong.api";
 import { useContext } from "react";
 import { songContext } from "../songContext";
-import { addToHistory } from "../../Auth/services/profile.api";
 
 export const useSong = () => {
     const context = useContext(songContext);

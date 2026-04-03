@@ -8,7 +8,7 @@ const api = axios.create({
 // Add response interceptor to handle 204 responses
 api.interceptors.response.use(
   response => {
-    console.log('Axios interceptor - response status:', response.status);
+    // console.log('Axios interceptor - response status:', response.status);
     // Handle 204 No Content by returning success object
     if (response.status === 204) {
       return { data: { success: true }, status: 204 };

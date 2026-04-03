@@ -1,6 +1,5 @@
 import React from 'react'
 import '../style/loading-screen.scss'
-import Navbar from '../../shared/components/Navbar'
 
 const emotionEmojis = {
   smiling: '😊',
@@ -11,7 +10,6 @@ const emotionEmojis = {
 const LoadingScreen = ({ emotion = 'smiling' }) => {
   return (
     <>
-      <Navbar />
       <div className="loading-screen">
         <div className="loading-content">
           <div className="emotion-large">
