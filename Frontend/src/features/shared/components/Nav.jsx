@@ -1,53 +1,45 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router'
-import { useAuth } from '../../Auth/hook/useAuth'
+import { useUser } from '../../User/hooks/useUser'
 import DefaultAvatar from './DefaultAvatar'
 import '../style/Navbar.scss'
 
-const Navbar = ({ onAddSongClick }) => {
+const Nav = ({ onAddSongClick }) => {
   const navigate = useNavigate()
-  const { User } = useAuth()
-  const profileImage = User?.profilePicture;
-
-  const handleProfileClick = () => {
-    navigate('/profile')
-  }
-
-  const handlePlaylistClick = () => {
-    navigate('/my-playlist')
-  }
+  const { user } = useUser()
+  const profileImage = user?.profilePicture
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        {/* Logo */}
         <div className="navbar-logo" onClick={() => navigate('/')}>
-          <span className="logo-text"><img src="../../../../Untitled design (6).png" alt="" /> Vibee</span>
+          <span className="logo-text">
+            <img src="../../../../Untitled design (6).png" alt="" /> Vibee
+          </span>
         </div>
 
-        {/* Center Buttons */}
         <div className="navbar-actions">
           <button className="action-btn add-song-btn" onClick={onAddSongClick}>
             <span className="btn-icon">➕</span>
             <span className="btn-text">Add Song</span>
           </button>
-          <button className="action-btn playlist-btn" onClick={handlePlaylistClick}>
+          <button className="action-btn playlist-btn" onClick={() => navigate('/my-playlist')}>
             <span className="btn-icon">📋</span>
             <span className="btn-text">My Playlist</span>
           </button>
         </div>
 
-        {/* User Icon */}
         <div className="navbar-user">
-          <button className="user-button" onClick={handleProfileClick}>
+          <button className="user-button" onClick={() => navigate('/profile')}>
             {profileImage ? (
-              <img src={profileImage} alt="Profile" className="profile-avatar" />
-            ) : (
-              <DefaultAvatar 
-                name={User?.username} 
-                size="md" 
-                className="profile-avatar-default"
+              <img 
+                src={profileImage} 
+                alt="Profile" 
+                className="profile-avatar"
+                onError={(e) => { e.target.style.display = 'none' }}
               />
+            ) : (
+              <DefaultAvatar name={user?.username} size="md" />
             )}
           </button>
         </div>
@@ -56,4 +48,4 @@ const Navbar = ({ onAddSongClick }) => {
   )
 }
 
-export default React.memo(Navbar)
+export default React.memo(Nav)

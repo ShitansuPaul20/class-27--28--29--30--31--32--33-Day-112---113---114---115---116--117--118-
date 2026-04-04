@@ -8,6 +8,6 @@ router.post('/add', authMiddleware.authUser, upload.single('song'), songControll
 router.get('/all', authMiddleware.authUser, songController.getSongs);
 router.get('/', authMiddleware.authUser, songController.getSong);
 router.get('/getSongs', authMiddleware.authUser, songController.getSongbyUser);
-// router.delete('/delete/:id', songController.deleteSong);
+router.delete('/delete/:songId', authMiddleware.authUser, songController.deleteUserSong);
 
 module.exports = router;

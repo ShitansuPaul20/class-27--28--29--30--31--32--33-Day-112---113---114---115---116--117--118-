@@ -5,7 +5,7 @@ import '../style/login.scss'
 import FormGroup from '../components/FormGroup'
 import { useAuth } from '../hook/useAuth'
 import { useNavigate } from 'react-router-dom'
-
+import { loginWithGoogle } from '../services/auth.api'
 
 const login = () => {
 
@@ -46,6 +46,17 @@ const login = () => {
             {'Login'}
           </button>
         </form>
+        <div className="divider">
+          <span>or</span>
+        </div>
+        <button 
+          type="button" 
+          className="google-btn"
+          onClick={loginWithGoogle}
+        >
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
+          Continue with Google
+        </button>
         <p className='login__register-link'>Don't have an account? <a href='/register' className='login__register-link-anchor'>Register here</a></p>
       </div>
     </main>

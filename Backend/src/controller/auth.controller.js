@@ -70,8 +70,8 @@ async function loginController(req, res){
         });
         res.cookie("token",token, {
             httpOnly: true,
-            secure: true,      
-            sameSite: "none",  
+            secure: false,      
+            sameSite: "lax",  
             maxAge: 3 * 24 * 60 * 60 * 1000
         })
         res.status(200).json({
@@ -87,15 +87,6 @@ async function loginController(req, res){
     }
 }
 
-async function getMe(req,res){
-    const user = await userModel.findById(req.user.id);
-
-    res.status(200).json({
-        message: "User fetched successfully",
-        user
-    });
-
-}
 
 async function logoutController(req, res){
 
@@ -115,6 +106,5 @@ async function logoutController(req, res){
 module.exports = {
     registerController,
     loginController,
-    getMe,
     logoutController,
 }

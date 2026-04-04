@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
         unique: true,
         match: [/\S+@\S+\.\S+/, "Please use a valid email address"]
     },
+    googleId: {
+        type: String,
+        default: null
+    },
     role: {
         type: String,
         enum: ['user', 'admin'],

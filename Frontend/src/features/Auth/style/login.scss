@@ -217,37 +217,51 @@ $grad:     linear-gradient(135deg, $purple, $pink);
   }
 
   // ── Google Button ─────────────────────────────────────
-  &__google-btn {
-    width: 100%;
-    @include flex-center;
-    gap: 10px;
-    padding: 13px 20px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid $border;
-    border-radius: $radius;
-    color: $text;
-    font-family: $font;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition:
-      border-color 0.25s ease,
-      background   0.25s ease,
-      transform    0.2s ease,
-      box-shadow   0.25s ease;
-    animation: fadeSlideUp 0.7s ease 0.5s both;
+ .divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
 
-    &:hover {
-      border-color: rgba(255, 255, 255, 0.18);
-      background: rgba(255, 255, 255, 0.08);
-      transform: translateY(-1px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    }
-
-    &:active { transform: translateY(0); }
-
-    svg { width: 18px; height: 18px; flex-shrink: 0; }
+  &::before, &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.2);
   }
+
+  span {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+  }
+}
+
+.google-btn {
+  width: 100%;
+  padding: 0.85rem;
+  background: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  transition: all 0.3s;
+
+  img {
+    width: 22px;
+    height: 22px;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+}
 
   // ── Register Link ─────────────────────────────────────
   &__register-link {

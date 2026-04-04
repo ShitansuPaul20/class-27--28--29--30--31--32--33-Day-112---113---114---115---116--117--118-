@@ -1,11 +1,3 @@
-.desktop-navbar-wrapper {
-  display: block;
-
-  @media (max-width: 768px) {
-    display: none;
-  }
-}
-
 .profile-container {
   min-height: calc(100vh - 70px);
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
@@ -21,387 +13,242 @@
     overflow: hidden;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 
+    // ── Header ──────────────────────────────────────────
     .profile-header {
-      padding: 3rem 2rem;
+      padding: 2.5rem 2rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
       .profile-picture-section {
         display: flex;
-        gap: 3rem;
-        align-items: flex-start;
+        gap: 2.5rem;
+        align-items: center;
 
         .profile-picture-wrapper {
           position: relative;
           flex-shrink: 0;
 
           .profile-picture {
-            width: 200px;
-            height: 200px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             object-fit: cover;
-            border: 5px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.3);
             transition: all 0.3s ease;
-
             &:hover {
               border-color: rgba(255, 255, 255, 0.4);
-              box-shadow: 0 15px 50px rgba(102, 126, 234, 0.5);
-            }
-          }
-
-          .profile-picture-default {
-            border: 5px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
-
-            &:hover {
-              border-color: rgba(255, 255, 255, 0.4);
-              box-shadow: 0 15px 50px rgba(102, 126, 234, 0.5);
+              box-shadow: 0 12px 40px rgba(102, 126, 234, 0.5);
             }
           }
 
           .upload-button {
             position: absolute;
-            bottom: 10px;
-            right: 10px;
-            width: 50px;
-            height: 50px;
+            bottom: 4px;
+            right: 4px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: 3px solid white;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: 2px solid white;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-
-            &:hover {
-              transform: scale(1.1);
-              box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-            }
-
-            .uploading {
-              font-size: 0.75rem;
-              color: white;
-            }
+            font-size: 0.95rem;
+            transition: transform 0.2s ease;
+            &:hover { transform: scale(1.1); }
           }
         }
 
         .user-info {
-          flex: 1;
           display: flex;
           flex-direction: column;
-          gap: 1rem;
-          justify-content: center;
+          gap: 0.5rem;
 
           .user-name {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 700;
             color: white;
             margin: 0;
-            word-break: break-word;
           }
 
-          .username {
-            font-size: 1.2rem;
+          .user-email {
+            font-size: 1rem;
             color: rgba(255, 255, 255, 0.6);
             margin: 0;
           }
 
-          .edit-input {
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(102, 126, 234, 0.5);
-            padding: 0.8rem 1rem;
-            border-radius: 10px;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: 700;
-
-            &:focus {
-              outline: none;
-              border-color: rgba(102, 126, 234, 1);
-              background: rgba(255, 255, 255, 0.15);
-            }
-
-            &::placeholder {
-              color: rgba(255, 255, 255, 0.4);
-            }
-          }
-
-          .buttons-group {
-            display: flex;
-            gap: 1rem;
-
-            .save-btn,
-            .cancel-btn {
-              padding: 0.8rem 1.5rem;
-              border: none;
-              border-radius: 8px;
-              font-weight: 600;
-              cursor: pointer;
-              transition: all 0.3s ease;
-              font-size: 1rem;
-            }
-
-            .save-btn {
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-              color: white;
-
-              &:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-              }
-            }
-
-            .cancel-btn {
-              background: rgba(255, 255, 255, 0.1);
-              color: white;
-              border: 1px solid rgba(255, 255, 255, 0.2);
-
-              &:hover {
-                background: rgba(255, 255, 255, 0.15);
-              }
-            }
-          }
-
-          .edit-btn {
-            align-self: flex-start;
-            padding: 0.6rem 1.2rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
+          .user-role-badge {
+            display: inline-block;
+            padding: 0.25rem 0.8rem;
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid rgba(102, 126, 234, 0.4);
+            border-radius: 20px;
+            font-size: 0.8rem;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-
-            &:hover {
-              transform: translateY(-2px);
-              box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-            }
+            color: #a0b4f8;
+            letter-spacing: 0.5px;
+            width: fit-content;
           }
         }
       }
     }
 
+    // ── Vibe & History shared ────────────────────────────
     .vibe-section,
     .history-section {
-      padding: 2.5rem 2rem;
+      padding: 2rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-
-      &:last-child {
-        border-bottom: none;
-      }
+      &:last-child { border-bottom: none; }
 
       .section-title {
-        font-size: 1.8rem;
+        font-size: 1.4rem;
         color: white;
-        margin: 0 0 2rem 0;
+        margin: 0 0 1.5rem 0;
         display: flex;
         align-items: center;
         gap: 0.5rem;
       }
 
-      .loading,
-      .no-stats,
+      .loading-text,
       .no-history {
+        color: rgba(255, 255, 255, 0.5);
         text-align: center;
-        color: rgba(255, 255, 255, 0.6);
         padding: 2rem 0;
-        font-size: 1.1rem;
-
-        .hint {
-          font-size: 0.9rem;
-          margin-top: 0.5rem;
-        }
+        font-size: 1rem;
       }
     }
 
+    // ── Vibe ────────────────────────────────────────────
     .vibe-section {
-      .total-songs {
+      .vibe-flex {
         display: flex;
-        justify-content: center;
-        margin-bottom: 2rem;
+        gap: 2.5rem;
+        align-items: center;
+        flex-wrap: wrap;
+      }
 
-        .stat-card {
-          background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
-          border: 1px solid rgba(102, 126, 234, 0.3);
-          border-radius: 15px;
-          padding: 2rem;
-          text-align: center;
-          min-width: 200px;
+      .mood-rings {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+      }
 
-          .stat-number {
-            font-size: 3rem;
+      .ring-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+
+        .ring-svg-wrap {
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          .ring-center-pct {
+            position: absolute;
+            font-size: 0.78rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
           }
+        }
 
-          .stat-label {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-top: 0.5rem;
-          }
+        .ring-label {
+          font-size: 0.8rem;
+          color: rgba(255, 255, 255, 0.6);
+          font-weight: 500;
         }
       }
 
-      .mood-breakdown {
-        .breakdown-title {
-          font-size: 1.3rem;
-          color: rgba(255, 255, 255, 0.8);
-          margin: 0 0 1.5rem 0;
-        }
+      .stats-col {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        flex: 1;
+        min-width: 180px;
 
-        .moods-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 1.5rem;
+        .stat-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0.7rem 1rem;
+          background: rgba(255, 255, 255, 0.06);
+          border-radius: 10px;
+          border: 1px solid rgba(255, 255, 255, 0.07);
 
-          .mood-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
+          .stat-row-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+          }
 
-            &:hover {
-              background: rgba(255, 255, 255, 0.08);
-              border-color: rgba(255, 255, 255, 0.2);
-              transform: translateY(-5px);
-            }
-
-            .mood-header {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              margin-bottom: 1rem;
-
-              .mood-name {
-                font-size: 1.1rem;
-                font-weight: 600;
-                color: white;
-              }
-
-              .mood-count {
-                font-size: 1.5rem;
-                font-weight: 700;
-                color: rgba(255, 255, 255, 0.8);
-              }
-            }
-
-            .mood-bar {
-              width: 100%;
-              height: 8px;
-              background: rgba(255, 255, 255, 0.1);
-              border-radius: 10px;
-              overflow: hidden;
-              margin-bottom: 0.8rem;
-
-              .mood-progress {
-                height: 100%;
-                border-radius: 10px;
-                transition: width 0.3s ease;
-              }
-            }
-
-            .mood-percentage {
-              text-align: right;
-              font-size: 0.9rem;
-              color: rgba(255, 255, 255, 0.6);
-              font-weight: 600;
-            }
+          .stat-row-val {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: white;
           }
         }
       }
     }
 
+    // ── History ──────────────────────────────────────────
     .history-section {
       .history-list {
         display: flex;
         flex-direction: column;
-        gap: 1rem;
-        max-height: 500px;
+        gap: 0.8rem;
+        max-height: 420px;
         overflow-y: auto;
 
-        &::-webkit-scrollbar {
-          width: 6px;
-        }
-
-        &::-webkit-scrollbar-track {
-          background: rgba(255, 255, 255, 0.05);
-          border-radius: 10px;
-        }
-
-        &::-webkit-scrollbar-thumb {
-          background: rgba(102, 126, 234, 0.5);
-          border-radius: 10px;
-
-          &:hover {
-            background: rgba(102, 126, 234, 0.7);
-          }
-        }
+        &::-webkit-scrollbar { width: 5px; }
+        &::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); border-radius: 10px; }
+        &::-webkit-scrollbar-thumb { background: rgba(102,126,234,0.5); border-radius: 10px; }
 
         .history-item {
           display: flex;
-          gap: 1.5rem;
-          padding: 1.5rem;
+          gap: 1rem;
+          padding: 1rem 1.2rem;
           background: rgba(255, 255, 255, 0.05);
-          border-left: 3px solid rgba(102, 126, 234, 0.3);
+          border-left: 3px solid rgba(102, 126, 234, 0.4);
           border-radius: 8px;
-          transition: all 0.3s ease;
+          transition: all 0.2s ease;
 
           &:hover {
             background: rgba(255, 255, 255, 0.08);
-            border-left-color: rgba(102, 126, 234, 0.6);
+            border-left-color: rgba(102, 126, 234, 0.8);
           }
 
-          .history-icon {
-            font-size: 1.5rem;
-            flex-shrink: 0;
-          }
+          .history-icon { font-size: 1.3rem; flex-shrink: 0; }
 
           .history-content {
             flex: 1;
 
             .history-action {
               display: flex;
-              gap: 0.5rem;
-              margin-bottom: 0.8rem;
+              gap: 0.4rem;
               flex-wrap: wrap;
+              margin-bottom: 0.4rem;
 
-              .action-type {
-                font-weight: 600;
-                color: rgba(255, 255, 255, 0.9);
-              }
-
-              .song-title {
-                color: rgba(102, 126, 234, 1);
-                font-style: italic;
-                word-break: break-word;
-              }
+              .action-type { font-weight: 600; color: rgba(255,255,255,0.9); font-size: 0.95rem; }
+              .song-title { color: #a0b4f8; font-style: italic; font-size: 0.95rem; word-break: break-word; }
             }
 
             .history-details {
               display: flex;
-              gap: 1rem;
-              flex-wrap: wrap;
+              gap: 0.8rem;
               align-items: center;
+              flex-wrap: wrap;
 
-              .mood-badge {
-                padding: 0.4rem 0.8rem;
+              .mood-tag {
+                padding: 0.2rem 0.7rem;
                 border-radius: 20px;
-                font-size: 0.85rem;
+                font-size: 0.78rem;
                 font-weight: 600;
+                background: rgba(102, 126, 234, 0.2);
+                color: #a0b4f8;
+                border: 1px solid rgba(102, 126, 234, 0.3);
               }
 
-              .history-date {
-                font-size: 0.85rem;
-                color: rgba(255, 255, 255, 0.5);
-              }
+              .history-date { font-size: 0.8rem; color: rgba(255,255,255,0.4); }
             }
           }
         }
@@ -410,52 +257,36 @@
   }
 }
 
+// ── Responsive ──────────────────────────────────────────
 @media (max-width: 768px) {
   .profile-container {
     padding: 1rem 0.5rem;
 
     .profile-card {
       .profile-header {
-        padding: 2rem 1rem;
+        padding: 1.5rem 1rem;
 
         .profile-picture-section {
           flex-direction: column;
-          gap: 1.5rem;
           align-items: center;
-
-          .profile-picture-wrapper {
-            .profile-picture,
-            .profile-picture-default {
-              width: 150px;
-              height: 150px;
-            }
-          }
+          gap: 1.2rem;
+          text-align: center;
 
           .user-info {
-            text-align: center;
-
-            .user-name {
-              font-size: 1.8rem;
-            }
-
-            .edit-btn {
-              align-self: center;
-            }
+            align-items: center;
+            .user-name { font-size: 1.5rem; }
           }
         }
       }
 
       .vibe-section,
       .history-section {
-        padding: 1.5rem 1rem;
-        
-        .section-title {
-          font-size: 1.3rem;
-        }
+        padding: 1.2rem 1rem;
+      }
 
-        .mood-grid {
-          grid-template-columns: 1fr;
-        }
+      .vibe-section .vibe-flex {
+        flex-direction: column;
+        align-items: flex-start;
       }
     }
   }

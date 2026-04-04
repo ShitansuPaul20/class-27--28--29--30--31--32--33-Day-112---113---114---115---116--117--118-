@@ -1,6 +1,21 @@
 const userModel = require('../models/user.model');
 const storageService = require('../services/storage.service');
 
+async function getMe(req,res){
+    const user = await userModel.findById(req.user.id);
+
+    res.status(200).json({
+        message: "User fetched successfully",
+        user:{
+            username: user.username,
+            email: user.email,
+            role: user.role,
+            profilePicture: user.profilePicture,
+        }
+    });
+
+}
+
 async function updateProfileController(req, res) {
     try {
         const userId = req.user.id;
@@ -27,7 +42,12 @@ async function updateProfileController(req, res) {
 
         res.status(200).json({
             message: "Profile picture updated successfully",
-            user
+            user:{
+                username: user.username,
+                email: user.email,
+                role: user.role,
+                profilePicture: user.profilePicture,
+        }
         });
 
     } catch (err) {
@@ -35,7 +55,6 @@ async function updateProfileController(req, res) {
         res.status(500).json({ message: "Server error", error: err.message });
     }
 }
-
 
 async function getUserStatsController(req, res) {
     try {
@@ -77,7 +96,6 @@ async function getUserStatsController(req, res) {
                 moodPercentages,
                 totalUploaded: uploadedSongs.length,
                 totalListened: listenedSongs.length,
-                history: user.songHistory.sort((a, b) => b.timestamp - a.timestamp),
             }
         });
     } catch (err) {
@@ -107,6 +125,7 @@ async function addToHistoryController(req, res) {
 }
 
 module.exports = {
+    getMe,
     updateProfileController,
     getUserStatsController,
     addToHistoryController

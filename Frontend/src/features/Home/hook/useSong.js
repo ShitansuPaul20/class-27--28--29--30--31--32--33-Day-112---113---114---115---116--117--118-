@@ -1,4 +1,4 @@
-import {getSong} from "../service/song.api";
+import { getSong, getSongsByUser, deleteUserSong } from "../service/song.api";
 import { useContext } from "react";
 import { songContext } from "../songContext";
 
@@ -11,7 +11,9 @@ export const useSong = () => {
         setSongs, 
         setLoading,
         currentSongIndex,
-        setCurrentSongIndex
+        setCurrentSongIndex,
+        getSongsByMood,
+        addToHistory
     } = context;
 
     const emotionToMoodMap = {
@@ -29,7 +31,6 @@ export const useSong = () => {
             setCurrentSongIndex(0);
         } catch (error) {
             console.error("Error fetching songs:", error);
-            setLoading(false);
         } finally {
             setLoading(false);
         }
@@ -44,7 +45,6 @@ export const useSong = () => {
             setCurrentSongIndex(0);
         } catch (error) {
             console.error("Error fetching combined songs:", error);
-            setLoading(false);
         } finally {
             setLoading(false);
         }
@@ -53,6 +53,29 @@ export const useSong = () => {
     async function handleEmotionToSong({emotion}) {
         const mood = emotionToMoodMap[emotion] || 'Happy';
         await handleGetSong({mood});
+    }
+
+    async function handleGetUserSongs() {
+        setLoading(true);
+        try {
+            const data = await getSongsByUser();
+            return data.songs || [];
+        } catch (error) {
+            console.error("Error fetching user songs:", error);
+            return [];
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    async function handleDeleteUserSong(songId) {
+        try {
+            const data = await deleteUserSong(songId);
+            return data;
+        } catch (error) {
+            console.error("Error deleting song:", error);
+            throw error;
+        }
     }
 
     function goToNextSong() {
@@ -86,6 +109,8 @@ export const useSong = () => {
         handleGetSong,
         handleGetSongWithUserSongs,
         handleEmotionToSong,
+        handleGetUserSongs,
+        handleDeleteUserSong,
         goToNextSong,
         goToPreviousSong,
         isFirstSong,
@@ -94,6 +119,3 @@ export const useSong = () => {
         trackSongListen
     });
 }
-
-
-
