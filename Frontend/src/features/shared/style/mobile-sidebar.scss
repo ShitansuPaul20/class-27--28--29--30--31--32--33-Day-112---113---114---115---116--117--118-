@@ -118,13 +118,35 @@
   .sidebar-content {
     padding: 1rem;
     color: white;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1rem;
+  }
+
+  .sidebar-logout-btn {
+    width: 100%;
+    padding: 1rem;
+    margin-top: auto;
+    background: rgba(255, 50, 50, 0.15);
+    border: 1px solid rgba(255, 50, 50, 0.3);
+    border-radius: 10px;
+    color: #ff6b6b;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background: rgba(255, 50, 50, 0.3);
+    }
   }
 
   .sidebar-nav {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-
+    flex: 1;
     .nav-item {
       display: flex;
       align-items: center;

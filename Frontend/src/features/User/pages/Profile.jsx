@@ -1,11 +1,14 @@
-import AddSongModal from '../../shared/components/AddSongModal'
 import React, { useState, useEffect } from 'react'
 import DefaultAvatar from '../../shared/components/DefaultAvatar'
 import { useUser } from '../hooks/useUser'
+import { useAuth } from '../../Auth/hook/useAuth'
+import { useNavigate } from 'react-router'
 import '../style/profile.scss'
 
 const Profile = ({ songAddedTrigger = 0 }) => {
   const { user, loading, handleGetMe, handleUpdateProfile, handleUserStats, handleUserHistory } = useUser()
+  const { handleLogout } = useAuth()
+  const navigate = useNavigate()
 
   const [stats, setStats] = useState(null)
   const [history, setHistory] = useState([])
@@ -38,6 +41,11 @@ const Profile = ({ songAddedTrigger = 0 }) => {
     } finally {
       setUploadingImage(false)
     }
+  }
+
+  const handleLogoutClick = async () => {
+    await handleLogout()
+    navigate('/login')
   }
 
   const formatDate = (date) => {
@@ -87,11 +95,11 @@ const Profile = ({ songAddedTrigger = 0 }) => {
             <div className="profile-picture-section">
               <div className="profile-picture-wrapper">
                 {user.profilePicture ? (
-                  <img 
-                    src={user.profilePicture} 
-                    alt="Profile" 
+                  <img
+                    src={user.profilePicture}
+                    alt="Profile"
                     className="profile-picture"
-                    onError={(e) => { e.target.style.display = 'none' }} 
+                    onError={(e) => { e.target.style.display = 'none' }}
                   />
                 ) : (
                   <DefaultAvatar name={user.username} size="xxl" />
@@ -109,6 +117,11 @@ const Profile = ({ songAddedTrigger = 0 }) => {
                 </span>
               </div>
             </div>
+
+            {/* Logout Button */}
+            <button className="logout-btn" onClick={handleLogoutClick}>
+              🚪 Logout
+            </button>
           </div>
 
           <div className="vibe-section">
