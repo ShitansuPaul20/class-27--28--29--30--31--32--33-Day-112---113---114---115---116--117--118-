@@ -7,13 +7,13 @@ const songSchema = new mongoose.Schema({
     },
     posterUrl: {
         type: String,
-        required: true,
+        default: null,
     },
     title:{
         type: String,
         required: true,
     },
-     mood: {
+    mood: {
         type: String,
         required: true,
         enum:{
