@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router'
 import { useUser } from '../../User/hooks/useUser'
 import DefaultAvatar from './DefaultAvatar'
-import '../style/Navbar.scss'
+import '../style/navbar.scss'
 
 const Nav = ({ onAddSongClick }) => {
   const navigate = useNavigate()
