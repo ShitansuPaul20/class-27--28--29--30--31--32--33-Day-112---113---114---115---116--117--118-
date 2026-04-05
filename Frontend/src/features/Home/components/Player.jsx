@@ -3,7 +3,7 @@ import '../style/player-footer.scss'
 import { useSong } from '../hook/useSong'
 
 const Player = ({ currentEmotion = 'smiling' }) => {
-  const { song, goToNextSong, goToPreviousSong, isFirstSong, isLastSong } = useSong();
+  const { song, goToNextSong, goToPreviousSong, isFirstSong, isLastSong } = useSong()
 
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
@@ -16,13 +16,10 @@ const Player = ({ currentEmotion = 'smiling' }) => {
   useEffect(() => {
     const audio = audioRef.current
     if (!audio) return
-
     const updateTime = () => setCurrentTime(audio.currentTime)
     const updateDuration = () => setDuration(audio.duration)
-
     audio.addEventListener('timeupdate', updateTime)
     audio.addEventListener('loadedmetadata', updateDuration)
-
     return () => {
       audio.removeEventListener('timeupdate', updateTime)
       audio.removeEventListener('loadedmetadata', updateDuration)
@@ -30,15 +27,11 @@ const Player = ({ currentEmotion = 'smiling' }) => {
   }, [])
 
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.playbackRate = speed
-    }
+    if (audioRef.current) audioRef.current.playbackRate = speed
   }, [speed])
 
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = isMuted ? 0 : volume
-    }
+    if (audioRef.current) audioRef.current.volume = isMuted ? 0 : volume
   }, [volume, isMuted])
 
   const togglePlayPause = () => {
@@ -53,21 +46,15 @@ const Player = ({ currentEmotion = 'smiling' }) => {
   }
 
   const skipForward = () => {
-    if (audioRef.current) {
-      audioRef.current.currentTime += 10
-    }
+    if (audioRef.current) audioRef.current.currentTime += 10
   }
 
   const skipBackward = () => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime - 10)
-    }
+    if (audioRef.current) audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime - 10)
   }
 
   const handleProgressChange = (e) => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = e.target.value
-    }
+    if (audioRef.current) audioRef.current.currentTime = e.target.value
   }
 
   const formatTime = (time) => {
@@ -85,27 +72,30 @@ const Player = ({ currentEmotion = 'smiling' }) => {
 
   return (
     <div className="player-footer-container">
-      <audio 
-        ref={audioRef} 
-        src={song?.url} 
+      <audio
+        ref={audioRef}
+        src={song?.url}
         onEnded={() => setIsPlaying(false)}
       />
-      
+
       <div className="player-footer">
         {/* Song Image */}
         <div className="song-image-section">
-          <img 
-            src={song?.posterUrl} 
+          <img
+            src={song?.posterUrl}
             alt={song?.title || 'Album Art'}
             className="song-image"
           />
         </div>
 
-        {/* Song Info and Expression */}
+        {/* Song Info */}
         <div className="song-info-section">
           <div className="song-details">
             <p className="song-title">{song?.title || 'Now Playing'}</p>
             <p className="song-mood">{song?.mood || 'Unknown'}</p>
+            <p className="song-source">
+              {song?.uploadedBy ? '👤 Uploaded by User' : '🎼 Uploaded by Admin'}
+            </p>
           </div>
           <div className="emotion-display">
             {emotionEmojis[currentEmotion] || '😊'}
@@ -128,43 +118,22 @@ const Player = ({ currentEmotion = 'smiling' }) => {
           </div>
         </div>
 
-        {/* Main Controls */}
+        {/* Controls */}
         <div className="controls-main">
-          {/* Skip Backward */}
-          <button 
-            className="control-btn skip-btn"
-            onClick={skipBackward}
-            title="Skip backward 10 seconds"
-          >
+          <button className="control-btn skip-btn" onClick={skipBackward} title="Skip backward 10s">
             <span className="icon">⏪</span>
           </button>
-
-          {/* Play/Pause */}
-          <button 
-            className={`control-btn play-pause-btn ${isPlaying ? 'playing' : ''}`}
-            onClick={togglePlayPause}
-            title={isPlaying ? 'Pause' : 'Play'}
-          >
+          <button className={`control-btn play-pause-btn ${isPlaying ? 'playing' : ''}`} onClick={togglePlayPause}>
             <span className="icon">{isPlaying ? '⏸️' : '▶️'}</span>
           </button>
-
-          {/* Skip Forward */}
-          <button 
-            className="control-btn skip-btn"
-            onClick={skipForward}
-            title="Skip forward 10 seconds"
-          >
+          <button className="control-btn skip-btn" onClick={skipForward} title="Skip forward 10s">
             <span className="icon">⏩</span>
           </button>
         </div>
 
-        {/* Volume Controls */}
+        {/* Volume */}
         <div className="volume-controls">
-          <button 
-            className="volume-btn"
-            onClick={() => setIsMuted(!isMuted)}
-            title={isMuted ? 'Unmute' : 'Mute'}
-          >
+          <button className="volume-btn" onClick={() => setIsMuted(!isMuted)}>
             <span className="icon">{isMuted ? '🔇' : '🔊'}</span>
           </button>
           <input
@@ -178,13 +147,12 @@ const Player = ({ currentEmotion = 'smiling' }) => {
           />
         </div>
 
-        {/* Speed Control */}
+        {/* Speed */}
         <div className="speed-control">
-          <select 
-            value={speed} 
+          <select
+            value={speed}
             onChange={(e) => setSpeed(parseFloat(e.target.value))}
             className="speed-selector"
-            title="Playback Speed"
           >
             <option value={0.5}>0.5x</option>
             <option value={0.75}>0.75x</option>
@@ -198,21 +166,10 @@ const Player = ({ currentEmotion = 'smiling' }) => {
 
         {/* Navigation */}
         <div className="navigation-controls">
-          <button 
-            className="nav-btn previous-btn"
-            onClick={goToPreviousSong}
-            disabled={isFirstSong}
-            title="Previous Song"
-          >
+          <button className="nav-btn previous-btn" onClick={goToPreviousSong} disabled={isFirstSong}>
             <span className="icon">⬅️</span>
           </button>
-
-          <button 
-            className="nav-btn next-btn"
-            onClick={goToNextSong}
-            disabled={isLastSong}
-            title="Next Song"
-          >
+          <button className="nav-btn next-btn" onClick={goToNextSong} disabled={isLastSong}>
             <span className="icon">➡️</span>
           </button>
         </div>

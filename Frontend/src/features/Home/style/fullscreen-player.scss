@@ -65,7 +65,7 @@ $font:         'Outfit', 'Segoe UI', sans-serif;
   background: rgba($surface, 0.8);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid $border;
-
+  margin-top: 80px;
   .btn-detect {
     background: rgba($purple, 0.15);
     border: 1px solid rgba($purple, 0.3);
