@@ -31,7 +31,7 @@ const MobileSidebar = ({ onAddSongClick }) => {
         <div className="mobile-navbar-container">
           <div className="mobile-navbar-logo" onClick={() => navigate('/')}>
             <span className="logo-text">
-              <img src="../../../../Untitled design (6).png" alt="" /> Vibee
+              <img src="/logo.png" alt="" /> Vibee
             </span>
           </div>
 

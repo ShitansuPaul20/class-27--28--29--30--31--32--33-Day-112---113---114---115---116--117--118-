@@ -18,6 +18,17 @@ const FullScreenPlayer = ({ currentEmotion = 'smiling', onDetectAgain }) => {
   const [isMuted, setIsMuted] = useState(false)
   const audioRef = useRef(null)
 
+  // Song change hone par reset karo
+  useEffect(() => {
+    setIsPlaying(false)
+    setCurrentTime(0)
+    setDuration(0)
+    if (audioRef.current) {
+      audioRef.current.pause()
+      audioRef.current.load()
+    }
+  }, [song?.url])
+
   useEffect(() => {
     const audio = audioRef.current
     if (!audio) return
@@ -49,6 +60,16 @@ const FullScreenPlayer = ({ currentEmotion = 'smiling', onDetectAgain }) => {
     }
   }
 
+  const handleNextSong = () => {
+    goToNextSong()
+    setIsPlaying(false)
+  }
+
+  const handlePreviousSong = () => {
+    goToPreviousSong()
+    setIsPlaying(false)
+  }
+
   const skipForward = () => {
     if (audioRef.current) audioRef.current.currentTime += 10
   }
@@ -73,7 +94,19 @@ const FullScreenPlayer = ({ currentEmotion = 'smiling', onDetectAgain }) => {
       <audio
         ref={audioRef}
         src={song?.url}
-        onEnded={() => setIsPlaying(false)}
+        onEnded={() => {
+          setIsPlaying(false)
+          if (!isLastSong) {
+            goToNextSong()
+            // thoda delay de taaki song load ho
+            setTimeout(() => {
+              if (audioRef.current) {
+                audioRef.current.play()
+                setIsPlaying(true)
+              }
+            }, 500)
+          }
+        }}
       />
 
       {/* Top Bar */}
@@ -121,7 +154,7 @@ const FullScreenPlayer = ({ currentEmotion = 'smiling', onDetectAgain }) => {
 
       {/* Controls */}
       <div className="player-controls">
-        <button className="control-btn previous-btn" onClick={goToPreviousSong} disabled={isFirstSong} title="Previous">
+        <button className="control-btn previous-btn" onClick={handlePreviousSong} disabled={isFirstSong} title="Previous">
           <span className="icon">⏮️</span>
         </button>
         <button className="control-btn skip-back-btn" onClick={skipBackward} title="Skip -10s">
@@ -133,7 +166,7 @@ const FullScreenPlayer = ({ currentEmotion = 'smiling', onDetectAgain }) => {
         <button className="control-btn skip-forward-btn" onClick={skipForward} title="Skip +10s">
           <span className="icon">⏩</span>
         </button>
-        <button className="control-btn next-btn" onClick={goToNextSong} disabled={isLastSong} title="Next">
+        <button className="control-btn next-btn" onClick={handleNextSong} disabled={isLastSong} title="Next">
           <span className="icon">⏭️</span>
         </button>
       </div>

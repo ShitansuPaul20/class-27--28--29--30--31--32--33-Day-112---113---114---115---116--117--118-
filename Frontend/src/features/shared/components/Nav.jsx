@@ -14,7 +14,7 @@ const Nav = ({ onAddSongClick }) => {
       <div className="navbar-container">
         <div className="navbar-logo" onClick={() => navigate('/')}>
           <span className="logo-text">
-            <img src="../../../../Untitled design (6).png" alt="" /> Vibee
+            <img src="/logo.png" alt="" /> Vibee
           </span>
         </div>
 
