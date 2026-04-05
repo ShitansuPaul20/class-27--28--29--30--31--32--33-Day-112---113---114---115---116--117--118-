@@ -32,12 +32,13 @@ app.use(express.static(publicPath));
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(passport.initialize());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/songs', songRoutes);
 app.use('/api/user', userRoutes);
 
-app.use(passport.initialize());
+
 
 app.use((req, res) => {
     if (!req.url.startsWith('/api')) {
