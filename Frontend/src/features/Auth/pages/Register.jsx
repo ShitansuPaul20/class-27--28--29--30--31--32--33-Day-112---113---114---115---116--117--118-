@@ -1,4 +1,4 @@
-import React ,{useState} from 'react'
+import React, { useState } from 'react'
 import FloatingCanvas from '../../shared/components/FloatingCanvas'
 import '../../shared/style/global.scss'
 import '../style/register.scss'
@@ -8,73 +8,87 @@ import { useNavigate } from 'react-router-dom'
 import { loginWithGoogle } from '../services/auth.api'
 
 const Register = () => {
+  const { loading, handleRegister } = useAuth()
+  const navigate = useNavigate()
 
-  const { loading, handleRegister } = useAuth();
-  const navigate = useNavigate();
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const params = new URLSearchParams(window.location.search)
+  const googleError = params.get('error')
 
   async function handleSubmit(e) {
-    e.preventDefault();
-    await handleRegister(username, email, password);
-    navigate("/");
+    e.preventDefault()
+    await handleRegister(username, email, password)
+    navigate('/')
   }
-
 
   return (
     <main className='register'>
       <FloatingCanvas count={20} minSpeed={0.2} maxSpeed={0.5} minOpacity={0.1} maxOpacity={0.2} />
       <div className='register__container'>
         <h1 className='register__title'>Register</h1>
+
+        {googleError === 'already_exists' && (
+          <p className="error-msg">❌ Account already exists. Please login instead.</p>
+        )}
+        {googleError === 'gmail_only' && (
+          <p className="error-msg">❌ Only Gmail accounts are allowed.</p>
+        )}
+
         <form className='register__form' onSubmit={handleSubmit}>
-          <FormGroup 
+          <FormGroup
             setValue={setUsername}
             value={username}
-            className='register__form-group' 
-            label="Username" 
-            id="username" 
-            type="text" 
-            placeholder="Enter your username" 
-            required={true} 
+            className='register__form-group'
+            label="Username"
+            id="username"
+            type="text"
+            placeholder="Enter your username"
+            required={true}
           />
-          <FormGroup 
+          <FormGroup
             setValue={setEmail}
             value={email}
-            className='register__form-group' 
-            label="Email" 
-            id="email" 
-            type="email" 
-            placeholder="Enter your email" 
-            required={true} 
+            className='register__form-group'
+            label="Email"
+            id="email"
+            type="email"
+            placeholder="Enter your email"
+            required={true}
           />
-          <FormGroup 
+          <FormGroup
             setValue={setPassword}
             value={password}
-            className='register__form-group' 
-            label="Password" 
-            id="password" 
-            type="password" 
-            placeholder="Enter your password" 
-            required={true} 
+            className='register__form-group'
+            label="Password"
+            id="password"
+            type="password"
+            placeholder="Enter your password"
+            required={true}
           />
           <button type='submit' className='register__form-button'>
-            {'Register'}
+            {loading ? 'Registering...' : 'Register'}
           </button>
         </form>
+
         <div className="divider">
-            <span>or</span>
-          </div>
-          <button 
-            type="button" 
-            className="google-btn"
-            onClick={loginWithGoogle}
-          >
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
-            Continue with Google
-          </button>
-        <p className='register__login-link'>Already have an account? <a href='/login' className='register__login-link-anchor'>Login here</a></p>
+          <span>or</span>
+        </div>
+
+        <button
+          type="button"
+          className="google-btn"
+          onClick={() => loginWithGoogle('register')}
+        >
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
+          Register with Google
+        </button>
+
+        <p className='register__login-link'>
+          Already have an account? <a href='/login' className='register__login-link-anchor'>Login here</a>
+        </p>
       </div>
     </main>
   )

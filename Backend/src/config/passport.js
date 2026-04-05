@@ -6,32 +6,44 @@ passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: process.env.GOOGLE_CALLBACK_URL,
-}, async (accessToken, refreshToken, profile, done) => {
+    passReqToCallback: true
+}, async (req, accessToken, refreshToken, profile, done) => {
     try {
         const email = profile.emails[0].value;
+        const action = req.query.state
 
-        // sirf gmail allow karo
         if (!email.endsWith('@gmail.com')) {
-            return done(null, false, { message: 'Only Gmail accounts are allowed' });
+            return done(null, false);
         }
 
-        // pehle check karo user exist karta hai ya nahi
-        let user = await userModel.findOne({ email });
+        const existingUser = await userModel.findOne({ email });
 
-        if (user) {
-            return done(null, user);
+        if (action === 'login') {
+            // login — user hona chahiye
+            if (!existingUser) {
+                return done(null, false, { reason: 'not_registered' });
+            }
+            return done(null, existingUser);
         }
 
-        // naya user banao
-        user = await userModel.create({
-            username: profile.displayName.replace(/\s+/g, '_').toLowerCase(),
-            email,
-            profilePicture: profile.photos[0]?.value.replace('=s96-c', '=s400-c') || null,
-            googleId: profile.id,
-            password: Math.random().toString(36), // dummy password
-        });
+        if (action === 'register') {
+            // register — user nahi hona chahiye
+            if (existingUser) {
+                return done(null, false, { reason: 'already_exists' });
+            }
 
-        return done(null, user);
+            // naya user banao
+            const newUser = await userModel.create({
+                username: profile.displayName.replace(/\s+/g, '_').toLowerCase(),
+                email,
+                profilePicture: profile.photos[0]?.value.replace('=s96-c', '=s400-c') || null,
+                googleId: profile.id,
+                password: Math.random().toString(36),
+            });
+
+            return done(null, newUser);
+        }
+
     } catch (error) {
         return done(error, null);
     }

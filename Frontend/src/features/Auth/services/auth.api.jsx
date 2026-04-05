@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api/auth',
+  baseURL: `${import.meta.env.VITE_API_URL}/api/auth`,
   withCredentials: true,
 });
 
-export function loginWithGoogle() {
-    window.location.href = 'http://localhost:3000/api/auth/google';
+export function loginWithGoogle(action) {
+    window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google?action=${action}`;
 }
 
 // Add response interceptor to handle 204 responses
